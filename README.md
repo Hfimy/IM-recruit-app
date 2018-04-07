@@ -1,6 +1,6 @@
-本项目将重新采用 typescript + react + redux + express + mongodb + socket.io 开发
+### **一款类 Boss 直聘的移动端 SPA 单页应用**
 
-### 开发笔记
+#### 技术栈 ：
 
-初始化  
-`creat-react-app bosszhipin --scripts-version=react-scripts-ts`
+* 前端：Typescript + React16 + Redux + React-Router4 + Antd-mobile
+* 后端：ES6 + Express + Mongodb + Socket.io
