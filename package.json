@@ -25,8 +25,10 @@
     "react": "^16.3.1",
     "react-dev-utils": "4.2.1",
     "react-dom": "^16.3.1",
+    "react-redux": "^5.0.7",
     "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
+    "redux-thunk": "^2.2.0",
     "source-map-loader": "^0.2.1",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
@@ -55,12 +57,18 @@
     "@types/react-dom": "^16.0.4",
     "@types/react-responsive": "^3.0.1",
     "@types/react-router-dom": "^4.2.6",
+    "@types/redux": "^3.6.0",
     "react-hot-loader": "^4.0.1",
+    "redux-devtools-extension": "^2.13.2",
     "typescript": "^2.8.1"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
-    "setupFiles": ["<rootDir>/config/polyfills.js"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
       "<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)"
@@ -71,8 +79,7 @@
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)":
-        "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"
@@ -100,7 +107,9 @@
     }
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"

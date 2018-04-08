@@ -2,7 +2,7 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Login from 'container/Login';
+import { view as Login } from 'container/Login';
 
 class App extends React.Component {
   render() {
