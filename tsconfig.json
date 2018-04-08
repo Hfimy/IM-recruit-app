@@ -18,7 +18,8 @@
     "noUnusedLocals": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"]
+      "src/*": ["src/*"],
+      "container/*": ["src/container/*"]
     }
   },
   "exclude": [

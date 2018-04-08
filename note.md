@@ -16,3 +16,5 @@ npm run eject
 react-hot-loader
 
 4、 在 tsconfig.json 里配置模块别名
+
+5、 添加响应式：react-responsive

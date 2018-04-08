@@ -1,9 +1,18 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import Login from 'container/Login';
 
 class App extends React.Component {
   render() {
-    return <div className="App">hello ,typescript</div>;
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login" exact={true} component={Login} />
+        </Switch>
+      </BrowserRouter>
+    );
   }
 }
 
