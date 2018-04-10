@@ -9,17 +9,20 @@
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
+    "strict": false,
+    // "forceConsistentCasingInFileNames": true,
+    // "noImplicitReturns": true,
+    // "noImplicitThis": true,
+    "noImplicitAny": false,
+    // "strictNullChecks": true,
+    // "suppressImplicitAnyIndexErrors": true,
+    // "noUnusedLocals": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "src/*": ["src/*"],
-      "container/*": ["src/container/*"]
+      "container/*": ["src/container/*"],
+      "component/*": ["src/component/*"]
     }
   },
   "exclude": [

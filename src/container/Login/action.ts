@@ -1,30 +1,31 @@
 import { LOGIN_SUCCESS, LOGIN_FAIL } from './actionType';
 
-interface Login_Success {
+interface LoginSuccess {
   type: LOGIN_SUCCESS;
   data: {
     user: string;
   };
 }
 
-interface Login_Fail {
+interface LoginFail {
   type: LOGIN_FAIL;
   msg: string;
 }
 
-export type Login_Type = Login_Success | Login_Fail;
+export type LoginType = LoginSuccess | LoginFail;
 
 interface Data {
   user: string;
 }
-export function loginSuccess(data: Data): Login_Success {
+
+export function loginSuccess(data: Data): LoginSuccess {
   return {
     type: LOGIN_SUCCESS,
     data
   };
 }
 
-export function loginFail(msg: string): Login_Fail {
+export function loginFail(msg: string): LoginFail {
   return {
     type: LOGIN_FAIL,
     msg

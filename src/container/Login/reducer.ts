@@ -1,11 +1,11 @@
 import { LOGIN_SUCCESS, LOGIN_FAIL } from './actionType';
-import { loginSuccess, loginFail, Login_Type } from './action';
+import { LoginType } from './action';
 
-interface UserState {
+export interface UserState {
   user?: string;
   msg?: string;
 }
-export default function reducer(state: UserState, action: Login_Type) {
+export function reducer(state: UserState = {}, action: LoginType) {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
