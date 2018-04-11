@@ -5,7 +5,23 @@ export interface UserState {
   user?: string;
   msg?: string;
 }
-export function reducer(state: UserState = {}, action: LoginType) {
+// export function UserReducer(state: UserState = {}, action: LoginType) {
+//   switch (action.type) {
+//     case LOGIN_SUCCESS:
+//       return {
+//         ...state,
+//         user: action.data.user
+//       };
+//     case LOGIN_FAIL:
+//       return {
+//         ...state,
+//         msg: action.msg
+//       };
+//     default:
+//       return state;
+//   }
+// }
+export const UserReducer = (state: UserState = {}, action: LoginType) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
@@ -20,4 +36,4 @@ export function reducer(state: UserState = {}, action: LoginType) {
     default:
       return state;
   }
-}
+};

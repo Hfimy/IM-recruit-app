@@ -1,28 +1,46 @@
 import * as React from 'react';
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import Logo from 'component/Logo';
 
-import { loginSuccess, loginFail, LoginType } from './action';
-import { UserState } from './reducer';
+import { loginSuccess, loginFail } from './action';
+import { RootState } from 'src/reducer';
+// const mapStateToProps = ({ user }) => ({
+//   user: user.user,
+//   msg: user.msg
+// });
 
-const mapStateToProps = ({ user }) => ({
-  user: user.user,
-  msg: user.msg
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<LoginType>) => ({
-  onLoginSuccess: () => dispatch(loginSuccess({ user: 'h' })),
-  onLoginFail: () => dispatch(loginFail('err'))
-});
-
+// const mapDispatchToProps = (dispatch: Dispatch<LoginType>) => ({
+//   onLoginSuccess: () => dispatch(loginSuccess()),
+//   onLoginFail: () => dispatch(loginFail())
+// });
+// const mapDispatchToProps = {
+//   onLoginSuccess: loginSuccess,
+//   onLoginFail: loginFail
+// };
+// interface RootState {
+//   user: {
+//     user?: string;
+//     msg?: string;
+//   };
+// }
 interface Props {
   user?: string;
   msg?: string;
   onLoginSuccess?: () => void;
   onLoginFail?: () => void;
 }
-@(connect(mapStateToProps, mapDispatchToProps) as any)
-export default class Login extends React.Component<Props, object> {
+
+@(connect(
+  ({ user }: RootState) => ({
+    user: user.user,
+    msg: user.msg
+  }),
+  {
+    onLoginSuccess: loginSuccess,
+    onLoginFail: loginFail
+  }
+) as any)
+export default class Login extends React.Component<Props> {
   render() {
     const { user, msg, onLoginSuccess, onLoginFail } = this.props;
     return (

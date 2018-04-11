@@ -18,16 +18,12 @@ interface Data {
   user: string;
 }
 
-export function loginSuccess(data: Data): LoginSuccess {
-  return {
-    type: LOGIN_SUCCESS,
-    data
-  };
-}
+export const loginSuccess = (data: Data): LoginSuccess => ({
+  type: LOGIN_SUCCESS,
+  data
+});
 
-export function loginFail(msg: string): LoginFail {
-  return {
-    type: LOGIN_FAIL,
-    msg
-  };
-}
+export const loginFail = (msg: string): LoginFail => ({
+  type: LOGIN_FAIL,
+  msg
+});

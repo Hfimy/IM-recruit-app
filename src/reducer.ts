@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
 
-import { reducer as user } from 'container/Login';
+import { UserState, UserReducer } from 'container/Login';
 
-export default combineReducers({
-  user
+export interface RootState {
+  user: UserState;
+}
+export const RootReducer = combineReducers<RootState>({
+  user: UserReducer
 });
