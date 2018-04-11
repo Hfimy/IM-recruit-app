@@ -5,6 +5,6 @@ import { UserState, UserReducer } from 'container/Login';
 export interface RootState {
   user: UserState;
 }
-export const RootReducer = combineReducers<RootState>({
+export const RootReducer = combineReducers({
   user: UserReducer
 });

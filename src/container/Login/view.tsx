@@ -4,25 +4,7 @@ import Logo from 'component/Logo';
 
 import { loginSuccess, loginFail } from './action';
 import { RootState } from 'src/reducer';
-// const mapStateToProps = ({ user }) => ({
-//   user: user.user,
-//   msg: user.msg
-// });
 
-// const mapDispatchToProps = (dispatch: Dispatch<LoginType>) => ({
-//   onLoginSuccess: () => dispatch(loginSuccess()),
-//   onLoginFail: () => dispatch(loginFail())
-// });
-// const mapDispatchToProps = {
-//   onLoginSuccess: loginSuccess,
-//   onLoginFail: loginFail
-// };
-// interface RootState {
-//   user: {
-//     user?: string;
-//     msg?: string;
-//   };
-// }
 interface Props {
   user?: string;
   msg?: string;

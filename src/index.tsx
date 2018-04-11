@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import MediaQuery from 'react-responsive';
 import registerServiceWorker from './registerServiceWorker';
+import MediaQuery from 'react-responsive';
 
 import App from './App';
 
