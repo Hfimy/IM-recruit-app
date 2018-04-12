@@ -17,11 +17,13 @@
     // "suppressImplicitAnyIndexErrors": true,
     // "noUnusedLocals": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "src/*": ["src/*"],
       "container/*": ["src/container/*"],
-      "component/*": ["src/component/*"]
+      "component/*": ["src/component/*"],
+      "api/*": ["src/api/*"]
     }
   },
   "exclude": [

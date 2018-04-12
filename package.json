@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd-mobile": "^2.1.8",
     "autoprefixer": "7.1.6",
+    "axios": "^0.18.0",
     "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
     "babel-preset-react-app": "^3.1.1",
@@ -25,6 +27,7 @@
     "react": "^16.3.1",
     "react-dev-utils": "4.2.1",
     "react-dom": "^16.3.1",
+    "react-native": "^0.55.2",
     "react-redux": "^5.0.7",
     "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
@@ -52,6 +55,7 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/jest": "^22.2.2",
     "@types/node": "^9.6.2",
     "@types/react": "^16.3.5",
@@ -59,7 +63,7 @@
     "@types/react-redux": "^5.0.15",
     "@types/react-responsive": "^3.0.1",
     "@types/react-router-dom": "^4.2.6",
-    "@types/redux": "^3.6.0",
+    "babel-plugin-import": "^1.7.0",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "react-hot-loader": "^4.0.1",
@@ -67,12 +71,8 @@
     "typescript": "^2.8.1"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
+    "setupFiles": ["<rootDir>/config/polyfills.js"],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
       "<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)"
@@ -83,14 +83,13 @@
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)":
+        "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"
     ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
+    "moduleNameMapper": {},
     "moduleFileExtensions": [
       "mjs",
       "web.ts",
@@ -111,11 +110,10 @@
     }
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "proxy": "http://localhost:3002/"
 }
