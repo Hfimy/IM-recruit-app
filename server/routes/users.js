@@ -18,7 +18,7 @@ router.post('/register', (req, res) => {
       checkError(err);
       const { _id, user, type } = data;
       res.cookie('uid', _id);
-      res.json({ code: 0, msg: '注册成功' });
+      res.json({ code: 0 });
     });
   });
 });
@@ -38,7 +38,7 @@ router.post('/login', (req, res) => {
 router.get('/info', (req, res) => {
   const { uid } = req.cookies;
   if (!uid) {
-    return res.json({ code: 1, msg: '用户未登录' });
+    return res.json({ code: 1, msg: '验证失败，请重新登录' });
   }
   User.findById(uid, _filter, (err, data) => {
     checkError(err);

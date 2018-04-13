@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ResponseData } from 'src/api';
 
-enum Type {
+enum UserType {
   Boss = 'boss',
   Expert = 'expert'
 }
@@ -9,7 +9,7 @@ enum Type {
 interface RegisterParameter {
   user: string;
   pwd: string;
-  type: Type;
+  type: UserType;
 }
 
 export function register(

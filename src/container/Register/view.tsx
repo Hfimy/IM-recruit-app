@@ -20,7 +20,7 @@ interface Props {
     push: (path: string) => void;
   };
 }
-enum Type {
+enum UserType {
   Boss = 'boss',
   Expert = 'expert'
 }
@@ -28,7 +28,7 @@ interface State {
   user: string;
   pwd: string;
   confirmPwd: string;
-  type: Type;
+  type: UserType;
 }
 
 @(withRouter as any)
@@ -37,7 +37,7 @@ export default class Register extends React.Component<Props, State> {
     user: '',
     pwd: '',
     confirmPwd: '',
-    type: Type.Boss
+    type: UserType.Boss
   };
   onChange = (type, value: string) => {
     this.setState({ [type]: value.trim() });
@@ -118,14 +118,14 @@ export default class Register extends React.Component<Props, State> {
           <WhiteSpace />
           <List>
             <RadioItem
-              checked={type === Type.Boss}
-              onChange={() => this.onChange('type', Type.Boss)}
+              checked={type === UserType.Boss}
+              onChange={() => this.onChange('type', UserType.Boss)}
             >
               Boss
             </RadioItem>
             <RadioItem
-              checked={type === Type.Expert}
-              onChange={() => this.onChange('type', Type.Expert)}
+              checked={type === UserType.Expert}
+              onChange={() => this.onChange('type', UserType.Expert)}
             >
               牛人
             </RadioItem>
