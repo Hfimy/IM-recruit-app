@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { ResponseData } from 'src/api';
 
-interface LoginParameter {
+interface LoginParams {
   user: string;
   pwd: string;
 }
 
-export function login(body: LoginParameter, cb: (data: ResponseData) => void) {
+export function login(body: LoginParams, cb: (data: ResponseData) => void) {
   const url = '/user/login';
   axios
     .post(url, body)

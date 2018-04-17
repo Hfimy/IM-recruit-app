@@ -5,6 +5,8 @@ import MediaQuery from 'react-responsive';
 
 import App from './App';
 
+import 'style/index.less';
+
 const Pc = () => <p>抱歉，本应用不支持PC端访问，请切换移动端浏览</p>;
 
 ReactDOM.render(

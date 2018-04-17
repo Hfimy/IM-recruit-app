@@ -6,14 +6,14 @@ enum UserType {
   Expert = 'expert'
 }
 
-interface RegisterParameter {
+interface RegisterParams {
   user: string;
   pwd: string;
   type: UserType;
 }
 
 export function register(
-  body: RegisterParameter,
+  body: RegisterParams,
   cb: (data: ResponseData) => void
 ) {
   const url = '/user/register';

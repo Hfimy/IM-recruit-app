@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
   WingBlank,
@@ -13,17 +14,22 @@ const RadioItem = Radio.RadioItem;
 
 import Logo from 'component/Logo';
 
-import { register } from 'api/index';
+import { ResponseData, register } from 'src/api';
+
+import { action } from 'container/Login';
+
+enum UserType {
+  Boss = 'boss',
+  Expert = 'expert'
+}
 
 interface Props {
   history: {
     push: (path: string) => void;
   };
+  onRegisterSuccess: (data: string) => void;
 }
-enum UserType {
-  Boss = 'boss',
-  Expert = 'expert'
-}
+
 interface State {
   user: string;
   pwd: string;
@@ -32,6 +38,9 @@ interface State {
 }
 
 @(withRouter as any)
+@(connect(null, {
+  onRegisterSuccess: action.authSuccess
+}) as any)
 export default class Register extends React.Component<Props, State> {
   state = {
     user: '',
@@ -52,10 +61,12 @@ export default class Register extends React.Component<Props, State> {
       return;
     }
     const { user, pwd, type } = this.state;
-    register({ user, pwd, type }, ({ code, data, msg }) => {
+    register({ user, pwd, type }, ({ code, msg }: ResponseData) => {
       if (code === 0) {
+        this.props.onRegisterSuccess(type);
+        localStorage.setItem('hasLogined', 'true');
         Toast.success('注册成功', 1);
-        this.props.history.push(`/${type}/info`);
+        this.props.history.push('/user/info');
         return;
       }
       if (msg) {
@@ -83,6 +94,9 @@ export default class Register extends React.Component<Props, State> {
       return false;
     }
     return true;
+  };
+  skipToLogin = () => {
+    this.props.history.push('/login');
   };
   render() {
     const { type } = this.state;
@@ -135,6 +149,10 @@ export default class Register extends React.Component<Props, State> {
           <WhiteSpace />
           <Button type="primary" onClick={this.onRegister}>
             点击注册
+          </Button>
+          <WhiteSpace />
+          <Button type="ghost" onClick={this.skipToLogin}>
+            返回登录
           </Button>
         </WingBlank>
       </div>

@@ -1,21 +1,29 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { WingBlank, WhiteSpace, InputItem, Button, Toast } from 'antd-mobile';
 
 import Logo from 'component/Logo';
 
-import { login } from 'api/index';
+import { ResponseData, login } from 'src/api';
+
+import { authSuccess } from './action';
 
 interface Props {
   history: {
     push: (path: string) => void;
   };
+  onLoginSuccess: (data: string) => void;
 }
 interface State {
   user: string;
   pwd: string;
 }
+
 @(withRouter as any)
+@(connect(null, {
+  onLoginSuccess: authSuccess
+}) as any)
 export default class Login extends React.Component<Props, State> {
   state = {
     user: '',
@@ -33,10 +41,24 @@ export default class Login extends React.Component<Props, State> {
     if (!this.checkBefore(this.state)) {
       return;
     }
-    login(this.state, ({ code, data, msg }) => {
+    login(this.state, ({ code, data, msg }: ResponseData) => {
       if (code === 0) {
-        console.log(data);
+        this.props.onLoginSuccess(data.type);
+        localStorage.setItem('hasLogined', 'true');
         Toast.success('欢迎登录', 1);
+        if (data.type === 'boss') {
+          if (!data.intention || !data.company || !data.city) {
+            this.props.history.push('/user/info');
+          } else {
+            this.props.history.push('/expert/list');
+          }
+        } else if (data.type === 'expert') {
+          if (!data.intention || !data.city) {
+            this.props.history.push('/user/info');
+          } else {
+            this.props.history.push('/boss/list');
+          }
+        }
         return;
       }
       if (msg) {
@@ -57,7 +79,7 @@ export default class Login extends React.Component<Props, State> {
     }
     return true;
   };
-  onRegister = () => {
+  skipToRegister = () => {
     this.props.history.push('/register');
   };
   render() {
@@ -92,7 +114,7 @@ export default class Login extends React.Component<Props, State> {
             登录
           </Button>
           <WhiteSpace />
-          <Button type="ghost" onClick={this.onRegister}>
+          <Button type="ghost" onClick={this.skipToRegister}>
             注册
           </Button>
         </WingBlank>

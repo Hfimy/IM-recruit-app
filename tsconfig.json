@@ -23,7 +23,8 @@
       "src/*": ["src/*"],
       "container/*": ["src/container/*"],
       "component/*": ["src/component/*"],
-      "api/*": ["src/api/*"]
+      "api/*": ["src/api/*"],
+      "style/*": ["src/style/*"]
     }
   },
   "exclude": [
