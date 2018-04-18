@@ -1,19 +1,16 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { WingBlank, WhiteSpace, InputItem, Button, Toast } from 'antd-mobile';
 
 import Logo from 'component/Logo';
 
 import { ResponseData, login } from 'src/api';
-
-import { authSuccess } from './action';
+import { getRedirectPath } from 'src/util';
 
 interface Props {
   history: {
     push: (path: string) => void;
   };
-  onLoginSuccess: (data: string) => void;
 }
 interface State {
   user: string;
@@ -21,9 +18,6 @@ interface State {
 }
 
 @(withRouter as any)
-@(connect(null, {
-  onLoginSuccess: authSuccess
-}) as any)
 export default class Login extends React.Component<Props, State> {
   state = {
     user: '',
@@ -43,29 +37,12 @@ export default class Login extends React.Component<Props, State> {
     }
     login(this.state, ({ code, data, msg }: ResponseData) => {
       if (code === 0) {
-        this.props.onLoginSuccess(data.type);
-        localStorage.setItem('hasLogined', 'true');
         Toast.success('欢迎登录', 1);
-        if (data.type === 'boss') {
-          if (!data.intention || !data.company || !data.city) {
-            this.props.history.push('/user/info');
-          } else {
-            this.props.history.push('/expert/list');
-          }
-        } else if (data.type === 'expert') {
-          if (!data.intention || !data.city) {
-            this.props.history.push('/user/info');
-          } else {
-            this.props.history.push('/boss/list');
-          }
-        }
+        this.props.history.push(getRedirectPath(data));
         return;
       }
-      if (msg) {
-        Toast.fail(msg, 1);
-      } else {
-        Toast.fail('登录失败', 1);
-      }
+
+      Toast.fail(msg, 1);
     });
   };
   checkBefore = ({ user, pwd }): boolean => {

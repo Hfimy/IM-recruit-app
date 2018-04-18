@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
   WingBlank,
@@ -16,8 +15,6 @@ import Logo from 'component/Logo';
 
 import { ResponseData, register } from 'src/api';
 
-import { action } from 'container/Login';
-
 enum UserType {
   Boss = 'boss',
   Expert = 'expert'
@@ -27,7 +24,6 @@ interface Props {
   history: {
     push: (path: string) => void;
   };
-  onRegisterSuccess: (data: string) => void;
 }
 
 interface State {
@@ -38,9 +34,6 @@ interface State {
 }
 
 @(withRouter as any)
-@(connect(null, {
-  onRegisterSuccess: action.authSuccess
-}) as any)
 export default class Register extends React.Component<Props, State> {
   state = {
     user: '',
@@ -63,17 +56,11 @@ export default class Register extends React.Component<Props, State> {
     const { user, pwd, type } = this.state;
     register({ user, pwd, type }, ({ code, msg }: ResponseData) => {
       if (code === 0) {
-        this.props.onRegisterSuccess(type);
-        localStorage.setItem('hasLogined', 'true');
         Toast.success('注册成功', 1);
         this.props.history.push('/user/info');
         return;
       }
-      if (msg) {
-        Toast.fail(msg, 1);
-      } else {
-        Toast.fail('注册失败', 1);
-      }
+      Toast.fail(msg, 1);
     });
   };
   checkBefore = ({ user, pwd, confirmPwd }): boolean => {

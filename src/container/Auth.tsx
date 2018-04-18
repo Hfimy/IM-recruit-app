@@ -1,38 +1,36 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Toast } from 'antd-mobile';
-import { action } from 'container/Login';
 import { getUserInfo, ResponseData } from 'src/api';
+import { loadUserSuccess } from 'reducer/user/action';
 interface Props {
   location?: {
     pathname: string;
   };
-  onGetUserInfo?: (data: string) => void;
+  history?: {
+    push: (path: string) => void;
+  };
+  onLoadUserSuccess?: (data: any) => void;
 }
 @(withRouter as any)
 @(connect(null, {
-  onGetUserInfo: action.authSuccess
+  onLoadUserSuccess: loadUserSuccess
 }) as any)
 export default class Auth extends React.Component<Props> {
-  componentWillMount() {
-    if (localStorage.getItem('hasLogined') !== 'true') {
-      return;
-    }
+  componentDidMount() {
     const pathname = this.props.location.pathname;
-    if (pathname === '/login' || pathname === '/register') {
+    const pathList = ['/login', '/register'];
+    if (pathList.indexOf(pathname) > -1) {
       return;
     }
     getUserInfo(({ code, data, msg }: ResponseData) => {
       if (code === 0) {
-        this.props.onGetUserInfo(data.type);
+        this.props.onLoadUserSuccess(data);
         return;
       }
-      if (msg) {
-        Toast.fail(msg, 1);
-      } else {
-        Toast.fail('获取用户信息失败', 1);
-      }
+      Toast.fail(msg);
+      this.props.history.push('/login');
     });
   }
   render() {

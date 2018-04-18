@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { UserState, UserReducer } from 'container/Login';
+import { UserState, UserReducer } from './user/reducer';
 
 export interface RootState {
   user: UserState;

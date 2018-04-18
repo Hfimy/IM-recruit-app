@@ -63,7 +63,6 @@ interface State {
   company: string;
 }
 @(withRouter as any)
-@(connect(({ user }: RootState) => ({ userType: user.type })) as any)
 export default class UserInfo extends React.Component<Props, State> {
   state = {
     jobValue: [],
