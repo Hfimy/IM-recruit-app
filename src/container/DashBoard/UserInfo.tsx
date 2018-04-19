@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
-import { RootState } from 'src/reducer';
-
+import { withRouter } from 'react-router-dom';
 import {
   NavBar,
   Button,
@@ -14,7 +12,8 @@ import {
   InputItem
 } from 'antd-mobile';
 
-import { ResponseData, saveUserInfo } from 'src/api';
+import { RootState } from 'src/reducer';
+import { action } from 'reducer/user';
 
 const columns1 = [
   { label: 'web前端', value: 'web前端' },
@@ -50,10 +49,16 @@ while (i < 21) {
 }
 
 interface Props {
-  userType: string;
   history: {
     push: (path: string) => void;
   };
+  userType: string;
+  onSaveUserInfo: (
+    body: any,
+    success: (msg: string, duration?: number) => void,
+    fail: (msg: string, duration?: number) => void,
+    jump: (path: string) => void
+  ) => void;
 }
 
 interface State {
@@ -63,6 +68,14 @@ interface State {
   company: string;
 }
 @(withRouter as any)
+@(connect(
+  ({ user }: RootState) => ({
+    userType: user.type
+  }),
+  {
+    onSaveUserInfo: action.saveUserInfo
+  }
+) as any)
 export default class UserInfo extends React.Component<Props, State> {
   state = {
     jobValue: [],
@@ -93,22 +106,12 @@ export default class UserInfo extends React.Component<Props, State> {
     if (userType === 'boss') {
       body.company = company;
     }
-    saveUserInfo(body, ({ code, data, msg }: ResponseData) => {
-      if (code === 0) {
-        Toast.success('保存成功', 1);
-        if (data.type === 'boss') {
-          this.props.history.push('/expert/list');
-        } else if (data.type === 'expert') {
-          this.props.history.push('/boss/list');
-        }
-        return;
-      }
-      if (msg) {
-        Toast.fail(msg, 1);
-      } else {
-        Toast.fail('编辑失败', 1);
-      }
-    });
+    this.props.onSaveUserInfo(
+      body,
+      Toast.success,
+      Toast.fail,
+      this.props.history.push
+    );
   };
   checkBefore = (userType: string): boolean => {
     const { jobValue, cityValue, company } = this.state;
@@ -129,9 +132,6 @@ export default class UserInfo extends React.Component<Props, State> {
     return true;
   };
   render() {
-    if (localStorage.getItem('hasLogined') !== 'true') {
-      return <Redirect to="/login" />;
-    }
     const { userType } = this.props;
     const { jobValue, cityValue, salaryValue } = this.state;
     let title, list;

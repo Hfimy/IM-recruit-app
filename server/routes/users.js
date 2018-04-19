@@ -65,6 +65,7 @@ router.get('/info', (req, res) => {
   }
   User.findById(uid, _filter, (err, data) => {
     if (err) {
+      console.log(err);
       return res.json({ code: 1, msg: '服务器错误' });
     }
     if (!data) {

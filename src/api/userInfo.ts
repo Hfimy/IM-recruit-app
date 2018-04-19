@@ -8,7 +8,7 @@ interface Params {
   company?: string;
 }
 
-export function saveUserInfo(body: Params, cb: (data: ResponseData) => void) {
+export function updateUserInfo(body: Params, cb: (data: ResponseData) => void) {
   const url = '/user/info';
   axios
     .post(url, body)

@@ -138,4 +138,4 @@ Unnecessary semicolon // 不必要的分号
 
 18、添加 axios 拦截器
 
-19、一个项目，只要在需要用到 redux 的情况下才知道如何更好的去用，但是可以预先搭好框架，不影响
+19、尝试使用 styled components

@@ -25,6 +25,7 @@
       "component/*": ["src/component/*"],
       "style/*": ["src/style/*"],
       "reducer/*": ["src/reducer/*"]
+      // "image/*": ["public/image/*"]
     }
   },
   "exclude": [

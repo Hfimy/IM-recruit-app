@@ -57,7 +57,7 @@ export default class Register extends React.Component<Props, State> {
     register({ user, pwd, type }, ({ code, msg }: ResponseData) => {
       if (code === 0) {
         Toast.success('注册成功', 1);
-        this.props.history.push('/user/info');
+        this.props.history.push('/userinfo');
         return;
       }
       Toast.fail(msg, 1);

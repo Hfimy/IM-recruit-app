@@ -3,10 +3,8 @@ import { Provider } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Auth from 'container/Auth';
 import Login from 'container/Login'; // 内部定义了reducer
 import Register from 'container/Register'; // 内部未定义reducer
-import UserInfo from 'container/UserInfo';
 import DashBoard from 'container/DashBoard';
 
 import store from './store';
@@ -16,15 +14,11 @@ import 'antd-mobile/dist/antd-mobile.css';
 
 const HotApp = () => (
   <BrowserRouter>
-    <div>
-      <Auth />
-      <Switch>
-        <Route path="/login" exact={true} component={Login} />
-        <Route path="/register" exact={true} component={Register} />
-        <Route path="/user/info" exact={true} component={UserInfo} />
-        <Route path="/" component={DashBoard} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route path="/login" exact={true} component={Login} />
+      <Route path="/register" exact={true} component={Register} />
+      <Route component={DashBoard} />
+    </Switch>
   </BrowserRouter>
 );
 

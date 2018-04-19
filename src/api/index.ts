@@ -1,6 +1,6 @@
 import { login } from './login';
 import { register } from './register';
-import { saveUserInfo, getUserInfo } from './userInfo';
+import { updateUserInfo, getUserInfo } from './userInfo';
 // 与后端的一种接口约定
 export interface ResponseData {
   code: number;
@@ -8,4 +8,4 @@ export interface ResponseData {
   msg?: string;
 }
 
-export { login, register, saveUserInfo, getUserInfo };
+export { login, register, updateUserInfo, getUserInfo };

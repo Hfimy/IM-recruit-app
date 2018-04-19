@@ -1,6 +1,7 @@
-import { LOAD_USER_SUCCESS } from './actionType';
+import { LOAD_USER_SUCCESS, UPDATE_USER_SUCCESS } from './actionType';
 
 export interface UserState {
+  _id?: string;
   user?: string;
   type?: string;
   intention?: string;
@@ -13,7 +14,10 @@ export const UserReducer = (state: UserState = {}, action) => {
   switch (action.type) {
     case LOAD_USER_SUCCESS:
       return {
-        ...state,
+        ...action.data
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
         ...action.data
       };
     default:
