@@ -13,7 +13,9 @@ import {
 } from 'antd-mobile';
 
 import { RootState } from 'src/reducer';
-import { action } from 'reducer/user';
+import { action, UserState } from 'reducer/user';
+
+import { getRedirectPath } from 'src/util';
 
 const columns1 = [
   { label: 'web前端', value: 'web前端' },
@@ -52,7 +54,10 @@ interface Props {
   history: {
     push: (path: string) => void;
   };
-  userType: string;
+  location: {
+    pathname: string;
+  };
+  user: UserState;
   onSaveUserInfo: (
     body: any,
     success: (msg: string, duration?: number) => void,
@@ -70,7 +75,7 @@ interface State {
 @(withRouter as any)
 @(connect(
   ({ user }: RootState) => ({
-    userType: user.type
+    user
   }),
   {
     onSaveUserInfo: action.saveUserInfo
@@ -93,7 +98,7 @@ export default class UserInfo extends React.Component<Props, State> {
     return labels.join('-');
   };
   onSave = () => {
-    const { userType } = this.props;
+    const userType = this.props.user.type;
     if (!this.checkBefore(userType)) {
       return;
     }
@@ -101,7 +106,8 @@ export default class UserInfo extends React.Component<Props, State> {
     let body: any = {
       intention: jobValue[0],
       city: cityValue[0],
-      payment: salaryValue
+      leftSalary: salaryValue[0] && Number(salaryValue[0].split('k')[0]),
+      rightSalary: salaryValue[1] && Number(salaryValue[1].split('k')[0])
     };
     if (userType === 'boss') {
       body.company = company;
@@ -114,13 +120,17 @@ export default class UserInfo extends React.Component<Props, State> {
     );
   };
   checkBefore = (userType: string): boolean => {
-    const { jobValue, cityValue, company } = this.state;
+    const { jobValue, cityValue, company, salaryValue } = this.state;
     if (!jobValue[0]) {
       Toast.fail('请选择职位', 1);
       return false;
     }
     if (!cityValue[0]) {
       Toast.fail('请选择城市', 1);
+      return false;
+    }
+    if (!salaryValue[0]) {
+      Toast.fail('请选择薪资范围', 1);
       return false;
     }
     if (userType === 'boss') {
@@ -131,8 +141,16 @@ export default class UserInfo extends React.Component<Props, State> {
     }
     return true;
   };
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.user.type !== undefined) {
+      const redirectPath = getRedirectPath(nextProps.user);
+      if (redirectPath !== nextProps.location.pathname) {
+        this.props.history.push(redirectPath);
+      }
+    }
+  }
   render() {
-    const { userType } = this.props;
+    const userType = this.props.user.type;
     const { jobValue, cityValue, salaryValue } = this.state;
     let title, list;
     if (userType === 'boss') {

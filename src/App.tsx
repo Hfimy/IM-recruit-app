@@ -3,14 +3,11 @@ import { Provider } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Login from 'container/Login'; // 内部定义了reducer
-import Register from 'container/Register'; // 内部未定义reducer
+import Login from 'container/Login';
+import Register from 'container/Register';
 import DashBoard from 'container/DashBoard';
 
 import store from './store';
-
-import './interceptor';
-import 'antd-mobile/dist/antd-mobile.css';
 
 const HotApp = () => (
   <BrowserRouter>

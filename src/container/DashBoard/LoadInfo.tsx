@@ -19,6 +19,7 @@ interface Props {
   onLoadUserInfo: action.loadUserInfo
 }) as any)
 export default class LoadInfo extends React.Component<Props> {
+  // 注意：只执行一次
   componentDidMount() {
     this.props.onLoadUserInfo(Toast.fail, this.props.history.push);
   }

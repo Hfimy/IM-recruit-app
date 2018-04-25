@@ -1,23 +1,32 @@
 import { LOAD_USER_SUCCESS, UPDATE_USER_SUCCESS } from './actionType';
 import { ResponseData, getUserInfo, updateUserInfo } from 'src/api';
-import { UserState } from './reducer';
 
+interface Data {
+  _id?: string;
+  user?: string;
+  type?: string;
+  intention?: string;
+  city?: string;
+  leftSalary?: number;
+  rightSalary?: number;
+  company?: string;
+}
 interface LoadUserSuccess {
   type: LOAD_USER_SUCCESS;
-  data: UserState;
+  data: Data;
 }
 
 interface UpdateUserSuccess {
   type: UPDATE_USER_SUCCESS;
-  data: UserState;
+  data: Data;
 }
 
-export const loadUserSuccess = (data: UserState): LoadUserSuccess => ({
+export const loadUserSuccess = (data: Data): LoadUserSuccess => ({
   type: LOAD_USER_SUCCESS,
   data
 });
 
-export const updateUserSuccess = (data: UserState): UpdateUserSuccess => ({
+export const updateUserSuccess = (data: Data): UpdateUserSuccess => ({
   type: UPDATE_USER_SUCCESS,
   data
 });

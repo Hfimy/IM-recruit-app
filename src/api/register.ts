@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { ResponseData } from 'src/api';
+import { axios, ResponseData } from 'src/api';
 
 enum UserType {
   Boss = 'boss',

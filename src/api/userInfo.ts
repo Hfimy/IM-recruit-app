@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { ResponseData } from 'src/api';
+import { axios, ResponseData } from 'src/api';
 
 interface Params {
   intention: string;
   city: string;
-  payment?: Array<string>;
+  leftSalary?: number;
+  rightSalary?: number;
   company?: string;
 }
 

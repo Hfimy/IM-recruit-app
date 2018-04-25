@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavBar, TabBar } from 'antd-mobile';
 
@@ -7,10 +7,13 @@ import BossList from 'container/BossList';
 import ExpertList from 'container/ExpertList';
 import Message from 'container/Message';
 import UserCenter from 'container/UserCenter';
-import NotFound from 'component/NotFound';
 
 import { RootState } from 'src/reducer';
 
+// import styled from 'styled-components';
+// const Div = styled.div`
+//   margin-top: 20px;
+// `;
 interface Props {
   userType: string;
   location: {
@@ -65,7 +68,19 @@ export default class Content extends React.Component<Props> {
     return (
       <div>
         <NavBar mode="dark">{current && current.title}</NavBar>
-        <div>content</div>
+        <div>
+          <Switch>
+            {showNavList.map((item, key) => (
+              <Route
+                key={key}
+                path={item.path}
+                exact={true}
+                component={item.component}
+              />
+            ))}
+            <Redirect to="/404" />
+          </Switch>
+        </div>
         <TabBar>
           {showNavList.map((item, key) => (
             <TabBar.Item

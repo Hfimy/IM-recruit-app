@@ -6,20 +6,18 @@ export interface UserState {
   type?: string;
   intention?: string;
   city?: string;
-  payment?: string;
+  leftSalary?: number;
+  rightSalary?: number;
   company?: string;
 }
 
 export const UserReducer = (state: UserState = {}, action) => {
   switch (action.type) {
     case LOAD_USER_SUCCESS:
-      return {
-        ...action.data
-      };
+      return action.data;
+
     case UPDATE_USER_SUCCESS:
-      return {
-        ...action.data
-      };
+      return action.data;
     default:
       return state;
   }

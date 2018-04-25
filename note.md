@@ -138,4 +138,6 @@ Unnecessary semicolon // 不必要的分号
 
 18、添加 axios 拦截器
 
+19、使用 redux-thunk
+
 19、尝试使用 styled components
