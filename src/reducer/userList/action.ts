@@ -2,6 +2,7 @@ import {
   SELECT_JOB,
   SELECT_CITY,
   SELECT_SALARY,
+  SELECT_SENIORITY,
   LOAD_USERLIST_SUCCESS,
   REFRESH_USERLIST_SUCCESS
 } from './actionType';
@@ -19,13 +20,17 @@ interface SelectSalary {
   type: SELECT_SALARY;
   selectedSalary: Array<string>;
 }
+interface SelectSeniority {
+  type: SELECT_SENIORITY;
+  selectedSeniority: Array<string>;
+}
 interface LoadUserListSuccess {
   type: LOAD_USERLIST_SUCCESS;
   list: Array<object>;
 }
 interface RefreshUserListSuccess {
   type: REFRESH_USERLIST_SUCCESS;
-  list: Array<object>
+  list: Array<object>;
 }
 
 export const selectJob = (jobValue): SelectJob => ({
@@ -43,6 +48,11 @@ export const selectSalary = (salaryValue): SelectSalary => ({
   selectedSalary: salaryValue
 });
 
+export const selectSeniority = (seniorityValue): SelectSeniority => ({
+  type: SELECT_SENIORITY,
+  selectedSeniority: seniorityValue
+});
+
 export const loadUserListSuccess = (
   list: Array<object>
 ): LoadUserListSuccess => ({
@@ -50,37 +60,32 @@ export const loadUserListSuccess = (
   list
 });
 
-export const refreshUserListSuccess = (list: Array<object>): RefreshUserListSuccess => ({
+export const refreshUserListSuccess = (
+  list: Array<object>
+): RefreshUserListSuccess => ({
   type: REFRESH_USERLIST_SUCCESS,
   list
-})
+});
 
 export const loadUserListInfo = (
   params,
   fail: (msg: string, duration?: number) => void,
+  cb?: () => void
 ) => {
   return dispatch => {
     // 为了避免冗余代码，在真正使用或处理的地方定义类型
     getUserList(params, ({ code, data, msg }: ResponseData) => {
-      if (code === 0) {
-        dispatch(loadUserListSuccess(data));
+      if (cb) {
+        cb();
+        if (code === 0) {
+          dispatch(refreshUserListSuccess(data));
+          return;
+        }
+        fail(msg, 1);
         return;
       }
-      fail(msg, 1);
-    });
-  };
-};
-export const refreshUserListInfo = (
-  params,
-  fail: (msg: string, duration?: number) => void,
-  cb: () => void
-) => {
-  return dispatch => {
-    // 为了避免冗余代码，在真正使用或处理的地方定义类型
-    getUserList(params, ({ code, data, msg }: ResponseData) => {
-      cb();
       if (code === 0) {
-        dispatch(refreshUserListSuccess(data));
+        dispatch(loadUserListSuccess(data));
         return;
       }
       fail(msg, 1);

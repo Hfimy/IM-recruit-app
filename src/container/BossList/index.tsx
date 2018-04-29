@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { RootState } from 'src/reducer';
 import { action } from 'reducer/userList';
@@ -15,7 +14,25 @@ import {
 } from 'antd-mobile';
 
 import PullToRefresh from 'rmc-pull-to-refresh';
+// bug修复
+PullToRefresh.prototype.componentWillUnmount = function() {
+  this.destroy(this.props.getScrollContainer() || this.containerRef);
+  if (this._timer) {
+    clearTimeout(this._timer);
+  }
+  if (this._initTimer) {
+    clearTimeout(this._initTimer);
+  }
+};
+PullToRefresh.prototype.componentDidMount = function() {
+  this._initTimer = setTimeout(() => {
+    this.init(this.props.getScrollContainer() || this.containerRef);
+    this.triggerPullToRefresh();
+    delete this._initTimer;
+  });
+};
 
+// 不变的值放在外面或者抽离至配置文件中
 const columns1 = [
   { label: 'web前端', value: 'web前端' },
   { label: 'Node.js后端', value: 'Node.js后端' },
@@ -49,7 +66,6 @@ while (i < 21) {
   i++;
 }
 interface Props {
-  userType: string;
   jobValue: Array<string>;
   cityValue: Array<string>;
   salaryValue: Array<string>;
@@ -60,22 +76,16 @@ interface Props {
   onLoadUserListInfo: (
     params: any,
     fail: (msg: string, duration?: number) => void,
+    cb?: () => void
   ) => void;
-  onRefreshUserListInfo: (
-    params: any,
-    fail: (msg: string, duration?: number) => void,
-    cb: () => void
-  ) => void
 }
-let firstLoad = true;
-let hasChangeType = false;
 interface State {
   refreshing: boolean;
   limit: number;
 }
+
 @(connect(
-  ({ user, userList }: RootState) => ({
-    userType: user.type,
+  ({ userList }: RootState) => ({
     jobValue: userList.selectedJob,
     cityValue: userList.selectedCity,
     salaryValue: userList.selectedSalary,
@@ -85,55 +95,49 @@ interface State {
     onSelectJob: action.selectJob,
     onSelectCity: action.selectCity,
     onSelectSalary: action.selectSalary,
-    onLoadUserListInfo: action.loadUserListInfo,
-    onRefreshUserListInfo: action.refreshUserListInfo
+    onLoadUserListInfo: action.loadUserListInfo
   }
 ) as any)
 export default class BossList extends React.Component<Props, State> {
+  // firstLoad: boolean;
   state = {
     refreshing: false,
     limit: 6
   };
-  componentWillReceiveProps(nextProps: Props) {
-    const { userType, jobValue, cityValue, salaryValue } = nextProps;
-    if (userType === undefined) {
-      return;
-    }
-    if (firstLoad) {
-      this.props.onLoadUserListInfo(
-        {
-          type: userType === 'boss' ? 'expert' : 'boss',
-          intention: jobValue,
-          city: cityValue,
-          leftSalary: salaryValue[0] && Number(salaryValue[0].split('k')[0]),
-          rightSalary: salaryValue[1] && Number(salaryValue[1].split('k')[0]),
-          limit: this.state.limit,
-          skip: hasChangeType ? 0 : this.props.userList.length
-        },
-        Toast.fail
-      );
-      firstLoad = false;
-      hasChangeType = false
-      return;
-    }
+  componentDidMount() {
+    const { jobValue, cityValue, salaryValue } = this.props;
+    this.props.onLoadUserListInfo(
+      {
+        type: 'boss',
+        intention: jobValue,
+        city: cityValue,
+        leftSalary: salaryValue[0] && Number(salaryValue[0].split('k')[0]),
+        rightSalary: salaryValue[1] && Number(salaryValue[1].split('k')[0]),
+        limit: this.state.limit
+      },
+      Toast.fail
+    );
+  }
+  // static getDerivedStateFromProps(nextProps,prevState){}
+  // getSnapshotBeforeUpdate(prevProps: Props, prevState: State): never {}
+  componentDidUpdate(prevProps: Props, prevState: State) {
+    const { jobValue, cityValue, salaryValue } = this.props;
     if (
-      nextProps.jobValue !== this.props.jobValue ||
-      nextProps.cityValue !== this.props.cityValue ||
-      nextProps.salaryValue !== this.props.salaryValue
+      this.props.jobValue !== prevProps.jobValue ||
+      this.props.cityValue !== prevProps.cityValue ||
+      this.props.salaryValue !== prevProps.salaryValue
     ) {
       this.props.onLoadUserListInfo(
         {
-          type: userType === 'boss' ? 'expert' : 'boss',
+          type: 'boss',
           intention: jobValue,
           city: cityValue,
           leftSalary: salaryValue[0] && Number(salaryValue[0].split('k')[0]),
           rightSalary: salaryValue[1] && Number(salaryValue[1].split('k')[0]),
-          limit: this.state.limit,
-          skip: hasChangeType ? 0 : this.props.userList.length
+          limit: this.state.limit
         },
         Toast.fail
       );
-      hasChangeType = false
     }
   }
   onFormat = labels => {
@@ -141,10 +145,10 @@ export default class BossList extends React.Component<Props, State> {
   };
   onRefresh = () => {
     this.setState({ refreshing: true });
-    const { userType, jobValue, cityValue, salaryValue } = this.props;
-    this.props.onRefreshUserListInfo(
+    const { jobValue, cityValue, salaryValue } = this.props;
+    this.props.onLoadUserListInfo(
       {
-        type: userType === 'boss' ? 'expert' : 'boss',
+        type: 'boss',
         intention: jobValue,
         city: cityValue,
         leftSalary: salaryValue[0] && Number(salaryValue[0].split('k')[0]),
@@ -154,18 +158,17 @@ export default class BossList extends React.Component<Props, State> {
       },
       Toast.fail,
       () => {
-        this.setState({ refreshing: false })
+        this.setState({ refreshing: false });
       }
     );
-
   };
   resetScrollTop = () => {
     if (document.getElementsByClassName('userlist-wrapper')) {
       document.getElementsByClassName('userlist-wrapper')[0].scrollTop = 0;
     }
-  }
+  };
   render() {
-    const { userType, jobValue, cityValue, salaryValue, userList } = this.props;
+    const { jobValue, cityValue, salaryValue, userList } = this.props;
     const { refreshing, limit } = this.state;
     return (
       <div className="bosslist-page">
@@ -176,19 +179,18 @@ export default class BossList extends React.Component<Props, State> {
             data={columns1}
             value={jobValue}
             onOk={value => {
-              hasChangeType = true;
               this.props.onSelectJob(value);
-              this.resetScrollTop()
+              this.resetScrollTop();
             }}
           >
             <List.Item arrow="horizontal">
               {jobValue.length ? (
                 jobValue[0]
               ) : (
-                  <span className="content-title">
-                    职位<Icon type="down" size="xxs" color="#888" />
-                  </span>
-                )}
+                <span className="content-title">
+                  职位<Icon type="down" size="xxs" color="#888" />
+                </span>
+              )}
             </List.Item>
           </Picker>
           <Picker
@@ -197,9 +199,8 @@ export default class BossList extends React.Component<Props, State> {
             data={columns2}
             value={cityValue}
             onOk={value => {
-              hasChangeType = true;
               this.props.onSelectCity(value);
-              this.resetScrollTop()
+              this.resetScrollTop();
             }}
           >
             <List.Item arrow="horizontal">
@@ -208,10 +209,10 @@ export default class BossList extends React.Component<Props, State> {
                 {cityValue.length ? (
                   cityValue[0]
                 ) : (
-                    <span className="content-title">
-                      城市<Icon type="down" size="xxs" color="#888" />
-                    </span>
-                  )}
+                  <span className="content-title">
+                    城市<Icon type="down" size="xxs" color="#888" />
+                  </span>
+                )}
                 <span className="fr separate-line">|</span>
               </div>
             </List.Item>
@@ -223,9 +224,8 @@ export default class BossList extends React.Component<Props, State> {
             data={columns3}
             value={salaryValue}
             onOk={value => {
-              hasChangeType = true;
               this.props.onSelectSalary(value);
-              this.resetScrollTop()
+              this.resetScrollTop();
             }}
             format={this.onFormat}
           >
@@ -233,10 +233,10 @@ export default class BossList extends React.Component<Props, State> {
               {salaryValue.length ? (
                 `${salaryValue[0]}-${salaryValue[1]}`
               ) : (
-                  <span className="content-title">
-                    薪资<Icon type="down" size="xxs" color="#888" />
-                  </span>
-                )}
+                <span className="content-title">
+                  薪资<Icon type="down" size="xxs" color="#888" />
+                </span>
+              )}
             </List.Item>
           </Picker>
         </List>
@@ -249,17 +249,25 @@ export default class BossList extends React.Component<Props, State> {
             activate: '松开立即加载',
             deactivate: '上拉可以加载',
             release: <Icon type="loading" />,
-            finish: <Icon type="down" size="xxs" className={userList.length >= limit ? '' : 'hidden'} />,
+            finish: (
+              <Icon
+                type="down"
+                size="xxs"
+                className={userList.length >= limit ? '' : 'hidden'}
+              />
+            )
           }}
           className="userlist-wrapper"
         >
           <div className="list-wrapper">
             {userList.map((item: any, index) => (
-              <div key={index}>
+              <div key={item.user}>
                 <Card>
                   <Card.Header
                     title={item.intention}
-                    extra={<span>{`${item.leftSalary}k-${item.rightSalary}k`}</span>}
+                    extra={
+                      <span>{`${item.leftSalary}k-${item.rightSalary}k`}</span>
+                    }
                   />
                   <Card.Body>
                     <div className="card-content">
@@ -275,7 +283,7 @@ export default class BossList extends React.Component<Props, State> {
             ))}
           </div>
         </PullToRefresh>
-      </div >
+      </div>
     );
   }
 }

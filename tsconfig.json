@@ -3,10 +3,7 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -23,21 +20,11 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": [
-        "src/*"
-      ],
-      "container/*": [
-        "src/container/*"
-      ],
-      "component/*": [
-        "src/component/*"
-      ],
-      "style/*": [
-        "src/style/*"
-      ],
-      "reducer/*": [
-        "src/reducer/*"
-      ]
+      "src/*": ["src/*"],
+      "container/*": ["src/container/*"],
+      "component/*": ["src/component/*"],
+      "style/*": ["src/style/*"],
+      "reducer/*": ["src/reducer/*"]
       // "image/*": ["public/image/*"]
     }
   },

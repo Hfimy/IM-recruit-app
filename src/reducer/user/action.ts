@@ -1,4 +1,4 @@
-import { LOAD_USER_SUCCESS, UPDATE_USER_SUCCESS } from './actionType';
+import { LOAD_USER_SUCCESS, UPDATE_USER_SUCCESS, LOGOUT } from './actionType';
 import { ResponseData, getUserInfo, updateUserInfo } from 'src/api';
 
 interface Data {
@@ -21,6 +21,9 @@ interface UpdateUserSuccess {
   data: Data;
 }
 
+interface Logout {
+  type: LOGOUT;
+}
 export const loadUserSuccess = (data: Data): LoadUserSuccess => ({
   type: LOAD_USER_SUCCESS,
   data
@@ -69,3 +72,7 @@ export const saveUserInfo = (
     });
   };
 };
+
+export const logout = (): Logout => ({
+  type: LOGOUT
+});

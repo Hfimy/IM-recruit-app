@@ -7,6 +7,7 @@ module.exports = {
     city: { type: String }, //城市
     leftSalary: { type: Number },
     rightSalary: { type: Number },
-    company: { type: String },//公司名称
+    company: { type: String }, //公司名称
+    seniority: { type: String } //工作年限
   }
 };

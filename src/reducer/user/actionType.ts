@@ -3,3 +3,6 @@ export type LOAD_USER_SUCCESS = typeof LOAD_USER_SUCCESS;
 
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export type UPDATE_USER_SUCCESS = typeof UPDATE_USER_SUCCESS;
+
+export const LOGOUT = 'LOGOUT';
+export type LOGOUT = typeof LOGOUT;

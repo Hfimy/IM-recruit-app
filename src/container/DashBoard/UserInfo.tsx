@@ -141,10 +141,10 @@ export default class UserInfo extends React.Component<Props, State> {
     }
     return true;
   };
-  componentWillReceiveProps(nextProps: Props) {
-    if (nextProps.user.type !== undefined) {
-      const redirectPath = getRedirectPath(nextProps.user);
-      if (redirectPath !== nextProps.location.pathname) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
+    if (this.props.user.type !== undefined) {
+      const redirectPath = getRedirectPath(this.props.user);
+      if (redirectPath !== this.props.location.pathname) {
         this.props.history.push(redirectPath);
       }
     }
@@ -232,7 +232,6 @@ export default class UserInfo extends React.Component<Props, State> {
         </List>
       );
     }
-
     return (
       <div className="userinfo-page">
         <NavBar mode="dark">{title}</NavBar>

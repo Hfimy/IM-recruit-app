@@ -13,20 +13,19 @@
     "jsdoc-format": true,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
-    "jsx-curly-spacing": ["always", "never"],
     "label-position": true,
-    "max-line-length": [false, 120],
+    "max-line-length": [true, 120],
     "member-ordering": [
       true,
       "public-before-private",
       "static-before-instance",
       "variables-before-functions"
     ],
-    "no-any": false,
+    "no-any": true,
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
-      false,
+      true,
       "log",
       "error",
       "debug",
@@ -56,9 +55,11 @@
     ],
     "quotemark": [true, "single", "jsx-double"],
     "radix": true,
-    "semicolon": [false],
+    "semicolon": [true, "always"],
     "switch-default": true,
+
     "trailing-comma": [false],
+
     "triple-equals": [true, "allow-null-check"],
     "typedef": [true, "parameter", "property-declaration"],
     "typedef-whitespace": [

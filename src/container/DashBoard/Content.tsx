@@ -33,20 +33,20 @@ export default class Content extends React.Component<Props> {
     } = this.props;
     const navList = [
       {
-        path: '/boss',
-        title: 'Boss列表',
-        text: '职位',
-        icon: 'boss',
-        component: BossList,
-        hide: userType === 'boss'
-      },
-      {
         path: '/expert',
         title: '牛人列表',
         text: '牛人',
         icon: 'expert',
         component: ExpertList,
         hide: userType === 'expert'
+      },
+      {
+        path: '/boss',
+        title: 'Boss列表',
+        text: '职位',
+        icon: 'boss',
+        component: BossList,
+        hide: userType === 'boss'
       },
       {
         path: '/message',
@@ -70,9 +70,10 @@ export default class Content extends React.Component<Props> {
         <NavBar mode="dark">{current && current.title}</NavBar>
         <div>
           <Switch>
-            {showNavList.map((item, key) => (
+            {/* 这是使用数组的下标作为key值是错误的 */}
+            {showNavList.map(item => (
               <Route
-                key={key}
+                key={item.path}
                 path={item.path}
                 exact={true}
                 component={item.component}
@@ -84,7 +85,7 @@ export default class Content extends React.Component<Props> {
         <TabBar>
           {showNavList.map((item, key) => (
             <TabBar.Item
-              key={key}
+              key={item.path}
               title={item.text}
               icon={{ uri: require(`../../../public/image/${item.icon}.png`) }}
               selected={item.path === pathname}
