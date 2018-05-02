@@ -50,6 +50,14 @@ while (i < 21) {
   i++;
 }
 
+const columns4 = [
+  { label: '1年以内', value: '1年以内' },
+  { label: '1-3年', value: '1-3年' },
+  { label: '3-5年', value: '3-5年' },
+  { label: '5-10年', value: '5-10年' },
+  { label: '10年以上', value: '10年以上' }
+];
+
 interface Props {
   history: {
     push: (path: string) => void;
@@ -70,6 +78,7 @@ interface State {
   jobValue: Array<string>;
   cityValue: Array<string>;
   salaryValue: Array<string>;
+  seniorityValue: Array<string>;
   company: string;
 }
 @(withRouter as any)
@@ -86,6 +95,7 @@ export default class UserInfo extends React.Component<Props, State> {
     jobValue: [],
     cityValue: [],
     salaryValue: [],
+    seniorityValue: [],
     company: ''
   };
   onOk = (type, value: Array<string>) => {
@@ -102,7 +112,13 @@ export default class UserInfo extends React.Component<Props, State> {
     if (!this.checkBefore(userType)) {
       return;
     }
-    const { jobValue, cityValue, salaryValue, company } = this.state;
+    const {
+      jobValue,
+      cityValue,
+      salaryValue,
+      seniorityValue,
+      company
+    } = this.state;
     let body: any = {
       intention: jobValue[0],
       city: cityValue[0],
@@ -111,6 +127,9 @@ export default class UserInfo extends React.Component<Props, State> {
     };
     if (userType === 'boss') {
       body.company = company;
+    }
+    if (userType === 'expert') {
+      body.seniority = seniorityValue[0];
     }
     this.props.onSaveUserInfo(
       body,
@@ -141,17 +160,17 @@ export default class UserInfo extends React.Component<Props, State> {
     }
     return true;
   };
-  componentDidUpdate(prevProps: Props, prevState: State) {
-    if (this.props.user.type !== undefined) {
-      const redirectPath = getRedirectPath(this.props.user);
-      if (redirectPath !== this.props.location.pathname) {
-        this.props.history.push(redirectPath);
-      }
-    }
-  }
+  // componentDidUpdate(prevProps: Props, prevState: State) {
+  //   if (this.props.user.type !== undefined) {
+  //     const redirectPath = getRedirectPath(this.props.user);
+  //     if (redirectPath !== this.props.location.pathname) {
+  //       this.props.history.push(redirectPath);
+  //     }
+  //   }
+  // }
   render() {
     const userType = this.props.user.type;
-    const { jobValue, cityValue, salaryValue } = this.state;
+    const { jobValue, cityValue, salaryValue, seniorityValue } = this.state;
     let title, list;
     if (userType === 'boss') {
       title = '招聘意向';
@@ -228,6 +247,15 @@ export default class UserInfo extends React.Component<Props, State> {
             format={this.onFormat}
           >
             <List.Item arrow="horizontal">薪资要求</List.Item>
+          </Picker>
+          <Picker
+            cols={1}
+            title="工作年限"
+            data={columns4}
+            value={seniorityValue}
+            onOk={value => this.onOk('seniorityValue', value)}
+          >
+            <List.Item arrow="horizontal">工作年限</List.Item>
           </Picker>
         </List>
       );

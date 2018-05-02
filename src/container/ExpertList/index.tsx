@@ -67,6 +67,9 @@ interface Props {
     fail: (msg: string, duration?: number) => void,
     cb?: () => void
   ) => void;
+  history: {
+    push: (obj: object) => void;
+  };
 }
 
 interface State {
@@ -146,6 +149,9 @@ export default class ExpertList extends React.Component<Props, State> {
         this.setState({ refreshing: false });
       }
     );
+  };
+  handleClick = (user: string, item: object) => {
+    this.props.history.push({ pathname: `/user/${user}`, state: item });
   };
   render() {
     const { jobValue, cityValue, seniorityValue, userList } = this.props;
@@ -240,7 +246,7 @@ export default class ExpertList extends React.Component<Props, State> {
           <div className="list-wrapper">
             {userList.map((item: any, index) => (
               <div key={item.user}>
-                <Card>
+                <Card onClick={() => this.handleClick(item.user, item)}>
                   <Card.Header
                     title={item.intention}
                     extra={

@@ -8,6 +8,7 @@ module.exports = {
     leftSalary: { type: Number },
     rightSalary: { type: Number },
     company: { type: String }, //公司名称
-    seniority: { type: String } //工作年限
+    seniority: { type: String }, //工作年限
+    avatar: { type: String } // 用户头像
   }
 };

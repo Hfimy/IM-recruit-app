@@ -7,6 +7,8 @@ import {
   SELECT_SENIORITY
 } from './actionType';
 
+import { LOGOUT } from 'reducer/user/actionType';
+
 export interface UserListState {
   selectedJob: Array<string>;
   selectedCity: Array<string>;
@@ -22,6 +24,7 @@ const initialUserListState = {
   selectedSeniority: [],
   list: []
 };
+
 export const UserListReducer = (
   state: UserListState = initialUserListState,
   action
@@ -39,6 +42,8 @@ export const UserListReducer = (
       return { ...state, list: action.list };
     case REFRESH_USERLIST_SUCCESS:
       return { ...state, list: [...state.list, ...action.list] };
+    case LOGOUT:
+      return initialUserListState;
     default:
       return state;
   }

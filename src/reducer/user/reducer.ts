@@ -9,6 +9,8 @@ export interface UserState {
   leftSalary?: number;
   rightSalary?: number;
   company?: string;
+  avatar?: string;
+  seniority?: string;
 }
 
 export const UserReducer = (state: UserState = {}, action) => {

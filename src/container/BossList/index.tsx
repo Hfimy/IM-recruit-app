@@ -78,6 +78,9 @@ interface Props {
     fail: (msg: string, duration?: number) => void,
     cb?: () => void
   ) => void;
+  history: {
+    push: (obj: object) => void;
+  };
 }
 interface State {
   refreshing: boolean;
@@ -166,6 +169,9 @@ export default class BossList extends React.Component<Props, State> {
     if (document.getElementsByClassName('userlist-wrapper')) {
       document.getElementsByClassName('userlist-wrapper')[0].scrollTop = 0;
     }
+  };
+  handleClick = (user: string, item: object) => {
+    this.props.history.push({ pathname: `/user/${user}`, state: item });
   };
   render() {
     const { jobValue, cityValue, salaryValue, userList } = this.props;
@@ -262,7 +268,7 @@ export default class BossList extends React.Component<Props, State> {
           <div className="list-wrapper">
             {userList.map((item: any, index) => (
               <div key={item.user}>
-                <Card>
+                <Card onClick={() => this.handleClick(item.user, item)}>
                   <Card.Header
                     title={item.intention}
                     extra={
