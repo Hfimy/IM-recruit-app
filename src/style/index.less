@@ -283,3 +283,87 @@
         }
     }
 }
+
+.chat-page {
+    .am-navbar {
+        background-color: rgb(23, 44, 60) !important;
+    }
+    .chat-list {
+        position: fixed;
+        top: 45px;
+        bottom: 45px;
+        width: 100%;
+        background-image: url('../../public/image/bg.jpeg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-origin: border-box;
+        overflow-y: scroll;
+        .am-list-body {
+            background-color: transparent;
+            .am-list-item {
+                background-color: transparent;
+            }
+        }
+        .am-textarea-label-5 {
+            width: 28px;
+        }
+        textarea {
+            max-width: 270px;
+        }
+        .am-textarea-label {
+            margin-right: 10px;
+        }
+        .from-me {
+            .am-textarea-item {
+                flex-direction: row-reverse;
+                textarea {
+                    float: right;
+                }
+                .am-textarea-label {
+                    margin-right: 0;
+                    margin-left: 10px;
+                }
+            }
+            .ta-r {
+                textarea {
+                    text-align: right;
+                }
+            }
+        }
+        .img-wrapper,
+        .img-wrapper>img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+        .am-list-body::before,
+        .am-list-body::after {
+            height: 0;
+        }
+    }
+    .bottom-input {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 44px;
+        line-height: 44px;
+        background-color: #fff; // box-sizing: border-box;
+        input {
+            display: inline-block;
+            width: 80%;
+            margin: 10px !important;
+            padding-bottom: 5px;
+            border: 0;
+            border-bottom: solid 1px #ccc;
+            font-size: 15px;
+        }
+        span {
+            display: inline-block;
+            width: 14%;
+            font-size: 15px;
+            color: #888;
+            text-align: center;
+        }
+    }
+}

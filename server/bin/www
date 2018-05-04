@@ -7,7 +7,8 @@
 const app = require('../app');
 const debug = require('debug')('server:server');
 const http = require('http');
-
+const model = require('../db');
+const Chat = model.getModel('chat');
 /**
  * Get port from environment and store in Express.
  */
@@ -20,7 +21,18 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+const io = require('socket.io')(server);
 
+io.on('connection', socket => {
+  socket.on('sendMsg', data => {
+    const { from, to, content } = data;
+    const chatId = [from, to].sort().join('_');
+    Chat.create({ from, to, content, chatId }, (err, doc) => {
+      const { __v, ...data } = { ...doc._doc };
+      io.emit('recMsg', data);
+    });
+  });
+});
 /**
  * Listen on provided port, on all network interfaces.
  */

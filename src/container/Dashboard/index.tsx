@@ -15,8 +15,8 @@ export default class DashBoard extends React.Component {
         <LoadInfo />
         <Switch>
           <Route path="/userinfo" exact={true} component={UserInfo} />
-          <Route path="/user/:user" exact={true} component={UserDetail} />
-          <Route path="/chat/:user" exact={true} component={Chat} />
+          <Route path="/user/:id" exact={true} component={UserDetail} />
+          <Route path="/chat/:id" exact={true} component={Chat} />
           <Route path="/404" exact={true} component={NotFound} />
           <Route component={Content} />
         </Switch>

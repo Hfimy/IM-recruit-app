@@ -4,11 +4,11 @@ import { NavBar, Icon, List, TextareaItem, Button } from 'antd-mobile';
 interface Props {
   history: {
     goBack: () => void;
-    push: (path: string) => void;
+    push: (obj: object) => void;
   };
   match: {
     params: {
-      user: string;
+      id: number;
     };
   };
   location: {
@@ -19,8 +19,8 @@ export default class UserDetail extends React.Component<Props> {
   goBack = () => {
     this.props.history.goBack();
   };
-  handleClick = () => {
-    this.props.history.push(`/chat/${this.props.match.params.user}`);
+  handleClick = (item: object) => {
+    this.props.history.push({ pathname: `/chat/${this.props.match.params.id}`, state: item })
   };
   render() {
     const item: any = this.props.location.state;
@@ -36,7 +36,7 @@ export default class UserDetail extends React.Component<Props> {
                   <h3>{item.intention}开发工程师</h3>
                   <span className="fr">{`${item.leftSalary}k-${
                     item.rightSalary
-                  }k`}</span>
+                    }k`}</span>
                 </div>
                 <div className="content">
                   <span>{item.company}</span>
@@ -77,8 +77,8 @@ export default class UserDetail extends React.Component<Props> {
               <div className="skill-tab">
                 {item.skillValue && item.skillValue.length
                   ? item.skillValue.map(_item => (
-                      <span key={_item}>{_item}</span>
-                    ))
+                    <span key={_item}>{_item}</span>
+                  ))
                   : [<span key={0}>测试一</span>, <span key={1}>测试二</span>]}
               </div>
             </div>
@@ -141,7 +141,7 @@ export default class UserDetail extends React.Component<Props> {
         />
         {list}
         <div className="chat-btn-wrapper">
-          <Button type="primary" onClick={this.handleClick}>
+          <Button type="primary" onClick={() => this.handleClick(item)}>
             立即沟通
           </Button>
         </div>

@@ -15,7 +15,7 @@ import {
 
 import PullToRefresh from 'rmc-pull-to-refresh';
 // bug修复
-PullToRefresh.prototype.componentWillUnmount = function() {
+PullToRefresh.prototype.componentWillUnmount = function () {
   this.destroy(this.props.getScrollContainer() || this.containerRef);
   if (this._timer) {
     clearTimeout(this._timer);
@@ -24,7 +24,7 @@ PullToRefresh.prototype.componentWillUnmount = function() {
     clearTimeout(this._initTimer);
   }
 };
-PullToRefresh.prototype.componentDidMount = function() {
+PullToRefresh.prototype.componentDidMount = function () {
   this._initTimer = setTimeout(() => {
     this.init(this.props.getScrollContainer() || this.containerRef);
     this.triggerPullToRefresh();
@@ -150,8 +150,8 @@ export default class ExpertList extends React.Component<Props, State> {
       }
     );
   };
-  handleClick = (user: string, item: object) => {
-    this.props.history.push({ pathname: `/user/${user}`, state: item });
+  handleClick = (id: number, item: object) => {
+    this.props.history.push({ pathname: `/user/${id}`, state: item });
   };
   render() {
     const { jobValue, cityValue, seniorityValue, userList } = this.props;
@@ -173,10 +173,10 @@ export default class ExpertList extends React.Component<Props, State> {
               {jobValue.length ? (
                 jobValue[0]
               ) : (
-                <span className="content-title">
-                  职位<Icon type="down" size="xxs" color="#888" />
-                </span>
-              )}
+                  <span className="content-title">
+                    职位<Icon type="down" size="xxs" color="#888" />
+                  </span>
+                )}
             </List.Item>
           </Picker>
           <Picker
@@ -195,10 +195,10 @@ export default class ExpertList extends React.Component<Props, State> {
                 {cityValue.length ? (
                   cityValue[0]
                 ) : (
-                  <span className="content-title">
-                    城市<Icon type="down" size="xxs" color="#888" />
-                  </span>
-                )}
+                    <span className="content-title">
+                      城市<Icon type="down" size="xxs" color="#888" />
+                    </span>
+                  )}
                 <span className="fr separate-line">|</span>
               </div>
             </List.Item>
@@ -217,10 +217,10 @@ export default class ExpertList extends React.Component<Props, State> {
               {seniorityValue.length ? (
                 seniorityValue[0]
               ) : (
-                <span className="content-title">
-                  年限<Icon type="down" size="xxs" color="#888" />
-                </span>
-              )}
+                  <span className="content-title">
+                    年限<Icon type="down" size="xxs" color="#888" />
+                  </span>
+                )}
             </List.Item>
           </Picker>
         </List>
@@ -246,7 +246,7 @@ export default class ExpertList extends React.Component<Props, State> {
           <div className="list-wrapper">
             {userList.map((item: any, index) => (
               <div key={item.user}>
-                <Card onClick={() => this.handleClick(item.user, item)}>
+                <Card onClick={() => this.handleClick(item._id, item)}>
                   <Card.Header
                     title={item.intention}
                     extra={

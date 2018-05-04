@@ -74,7 +74,6 @@ router.get('/info', (req, res) => {
   });
 });
 
-
 router.get('/list', (req, res, next) => {
   const { uid } = req.cookies;
   if (!uid) {
@@ -108,13 +107,16 @@ router.get('/list', (req, res, next) => {
   }
   let { limit = 10, skip = 0 } = req.query;
   limit = Number(limit);
-  skip = Number(skip)
-  User.find(queries, _filter).limit(limit).skip(skip).exec((err, data) => {
-    if (err) {
-      return res.json({ code: 1, msg: '服务器错误' });
-    }
-    res.json({ code: 0, data });
-  });
+  skip = Number(skip);
+  User.find(queries, _filter)
+    .limit(limit)
+    .skip(skip)
+    .exec((err, data) => {
+      if (err) {
+        return res.json({ code: 1, msg: '服务器错误' });
+      }
+      res.json({ code: 0, data });
+    });
 });
 
 module.exports = router;

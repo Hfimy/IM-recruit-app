@@ -5,6 +5,7 @@ import { login } from './login';
 import { register } from './register';
 import { updateUserInfo, getUserInfo } from './userInfo';
 import { getUserList } from './userList';
+import { getMsgList } from './chat'
 
 // 与后端的一种接口约定
 export interface ResponseData {
@@ -20,5 +21,6 @@ export {
   register,
   updateUserInfo,
   getUserInfo,
-  getUserList
+  getUserList,
+  getMsgList
 };

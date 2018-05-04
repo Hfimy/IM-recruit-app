@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { NavBar, TabBar } from 'antd-mobile';
+import { NavBar, TabBar, Toast } from 'antd-mobile';
 
 import BossList from 'container/BossList';
 import ExpertList from 'container/ExpertList';
-import Message from 'container/Message';
+import ChatList from 'container/ChatList';
 import UserCenter from 'container/UserCenter';
 
 import { RootState } from 'src/reducer';
@@ -22,9 +22,13 @@ interface Props {
   history: {
     push: (path: string) => void;
   };
+  unread: number;
 }
 
-@(connect(({ user }: RootState) => ({ userType: user.type })) as any)
+@(connect(
+  ({ user, chat }: RootState) => ({ userType: user.type, unread: chat.unread }),
+  null
+) as any)
 export default class Content extends React.Component<Props> {
   render() {
     const {
@@ -49,11 +53,11 @@ export default class Content extends React.Component<Props> {
         hide: userType === 'boss'
       },
       {
-        path: '/message',
+        path: '/chat',
         title: '聊天',
         text: '消息',
         icon: 'msg',
-        component: Message
+        component: ChatList
       },
       {
         path: '/usercenter',
@@ -70,7 +74,7 @@ export default class Content extends React.Component<Props> {
         <NavBar mode="dark">{current && current.title}</NavBar>
         <div>
           <Switch>
-            {/* 这是使用数组的下标作为key值是错误的 */}
+            {/* 这里使用数组的下标作为key值是错误的 */}
             {showNavList.map(item => (
               <Route
                 key={item.path}
@@ -87,6 +91,7 @@ export default class Content extends React.Component<Props> {
             <TabBar.Item
               key={item.path}
               title={item.text}
+              badge={item.path === '/chat' ? this.props.unread : 0}
               icon={{ uri: require(`../../../public/image/${item.icon}.png`) }}
               selected={item.path === pathname}
               selectedIcon={{

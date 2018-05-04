@@ -26,3 +26,15 @@ export const getRedirectPath = data => {
   }
   return redirectPath;
 };
+
+export const getStringLength = (str: string) => {
+  let length = 0;
+  for (let item of str) {
+    if (item.codePointAt(0) > 127) {
+      length += 2;
+    } else {
+      length += 1;
+    }
+  }
+  return length;
+};
