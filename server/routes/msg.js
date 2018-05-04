@@ -9,12 +9,18 @@ router.get('/list', (req, res, next) => {
   if (!uid) {
     return res.json({ code: 1, msg: '身份过期，请重新登录' });
   }
-  Chat.find({}, _filter, (err, data) => {
-    if (err) {
-      return res.json({ code: 1, msg: '服务器错误' });
+  Chat.find(
+    {
+      $or: [{ from: uid }, { to: uid }]
+    },
+    _filter,
+    (err, data) => {
+      if (err) {
+        return res.json({ code: 1, msg: '服务器错误' });
+      }
+      return res.json({ code: 0, data });
     }
-    return res.json({ code: 0, data });
-  });
+  );
 });
 
 module.exports = router;

@@ -63,7 +63,9 @@ export default class Chat extends React.Component<Props, State> {
       return;
     }
     const from = this.props.user._id;
+    // console.log(from);
     const to = this.props.match.params.id;
+    // console.log('to', to);
     const content = this.state.text;
     this.props.onSendMsg({ from, to, content });
     this.setState({ text: '' });
@@ -76,19 +78,7 @@ export default class Chat extends React.Component<Props, State> {
         </NavBar>
         <div className="chat-list">
           {this.props.chat.msgList.map(item => {
-            return item.from === this.props.match.params.id ? (
-              <List key={item._id}>
-                <TextareaItem
-                  title={
-                    <span className="img-wrapper">
-                      <img src={this.props.location.state.avatar} alt="" />
-                    </span>
-                  }
-                  autoHeight={true}
-                  value={`你发的${item.content}`}
-                />
-              </List>
-            ) : (
+            return item.from === this.props.user._id ? (
               <List key={item._id} className="from-me">
                 <TextareaItem
                   title={
@@ -99,6 +89,18 @@ export default class Chat extends React.Component<Props, State> {
                   className={getStringLength(item.content) < 30 ? 'ta-r' : ''}
                   autoHeight={true}
                   value={`我发的${item.content}`}
+                />
+              </List>
+            ) : (
+              <List key={item._id}>
+                <TextareaItem
+                  title={
+                    <span className="img-wrapper">
+                      <img src={this.props.location.state.avatar} alt="" />
+                    </span>
+                  }
+                  autoHeight={true}
+                  value={`你发的${item.content}`}
                 />
               </List>
             );

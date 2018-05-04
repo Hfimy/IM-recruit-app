@@ -60,6 +60,7 @@ router.post('/info', (req, res) => {
 
 router.get('/info', (req, res) => {
   const { uid } = req.cookies;
+  console.log('here', uid);
   if (!uid) {
     return res.json({ code: 1, msg: '身份过期，请重新登录' });
   }
