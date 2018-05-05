@@ -15,12 +15,12 @@ export const ChatReducer = (state: ChatState = initialState, action) => {
     case GET_MSGLIST_SUCCESS:
       return {
         msgList: action.list,
-        unread: action.list.filter(v => !v.read).length
+        unread: action.unread
       };
     case REC_MSG_SUCCESS:
       return {
         msgList: [...state.msgList, action.data],
-        unread: state.unread + 1
+        unread: state.unread + action.unreadAdd
       };
     // case GET_MSG_READ:
     default:

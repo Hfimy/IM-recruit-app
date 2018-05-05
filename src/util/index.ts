@@ -38,3 +38,7 @@ export const getStringLength = (str: string) => {
   }
   return length;
 };
+
+export const getChatId = (from: string, to: string) => {
+  return [from, to].sort().join('_');
+};
