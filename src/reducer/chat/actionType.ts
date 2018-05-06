@@ -6,5 +6,3 @@ export type REC_MSG_SUCCESS = typeof REC_MSG_SUCCESS;
 
 export const UPDATE_MSG_SUCCESS = 'UPDATE_MSG_SUCCESS';
 export type UPDATE_MSG_SUCCESS = typeof UPDATE_MSG_SUCCESS;
-// export const GET_MSG_READ = 'GET_MSG_READ'
-// export type GET_MSG_READ = typeof GET_MSG_READ

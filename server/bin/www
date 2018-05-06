@@ -31,6 +31,7 @@ io.on('connection', socket => {
       { from, to, content, chatId, create_time: new Date().getTime() },
       (err, doc) => {
         const { __v, ...data } = { ...doc._doc };
+        // 为何此处使用socket.emit无效？
         io.emit('recMsg', data);
       }
     );
@@ -42,7 +43,7 @@ io.on('connection', socket => {
       { $set: { read: true } },
       { multi: true },
       (err, doc) => {
-        io.emit('updateMsg', { from, to });
+        socket.emit('updateMsg', { from, to });
       }
     );
   });

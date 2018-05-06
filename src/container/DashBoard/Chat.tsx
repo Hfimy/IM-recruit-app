@@ -86,6 +86,21 @@ export default class Chat extends React.Component<Props, State> {
   onShowEmoji = () => {
     this.setState({ showEmoji: !this.state.showEmoji });
   };
+  setScrollBottom = () => {
+    const chatList = document.getElementById('chat-list');
+    if (chatList) {
+      chatList.scrollTo({
+        top: chatList.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+  componentDidMount() {
+    this.setScrollBottom();
+  }
+  componentDidUpdate() {
+    this.setScrollBottom();
+  }
   componentWillUnmount() {
     // 此处加一层过滤 减少不必要的通信
     const from = this.props.match.params.id;
@@ -106,7 +121,7 @@ export default class Chat extends React.Component<Props, State> {
         <NavBar icon={<Icon type="left" onClick={this.goBack} />}>
           {this.props.location.state.user}
         </NavBar>
-        <div className="chat-list">
+        <div className="chat-list" id="chat-list">
           {this.props.chat.msgList
             .filter(
               item =>

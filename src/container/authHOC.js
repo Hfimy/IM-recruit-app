@@ -1,5 +1,4 @@
-// 简单的高阶组件学习
-
+// 简单的高阶组件学习,此项目中未使用
 import React from 'react';
 
 export default function authHOC(Component) {
