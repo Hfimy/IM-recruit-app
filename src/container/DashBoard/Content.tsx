@@ -15,20 +15,22 @@ import { RootState } from 'src/reducer';
 //   margin-top: 20px;
 // `;
 interface Props {
+  userId: string;
   userType: string;
+  msgList: Array<any>;
   location: {
     pathname: string;
   };
   history: {
     push: (path: string) => void;
   };
-  unread: number;
 }
 
-@(connect(
-  ({ user, chat }: RootState) => ({ userType: user.type, unread: chat.unread }),
-  null
-) as any)
+@(connect(({ user, chat }: RootState) => ({
+  userId: user._id,
+  userType: user.type,
+  msgList: chat.msgList
+})) as any)
 export default class Content extends React.Component<Props> {
   render() {
     const {
@@ -69,6 +71,11 @@ export default class Content extends React.Component<Props> {
     ];
     const current = navList.find(item => item.path === pathname);
     const showNavList = navList.filter(item => item.hide !== true);
+
+    const unread = this.props.msgList.filter(
+      item => item.to === this.props.userId && !item.read
+    ).length;
+
     return (
       <div>
         <NavBar mode="dark">{current && current.title}</NavBar>
@@ -91,7 +98,7 @@ export default class Content extends React.Component<Props> {
             <TabBar.Item
               key={item.path}
               title={item.text}
-              badge={item.path === '/chat' ? this.props.unread : 0}
+              badge={item.path === '/chat' ? unread : 0}
               icon={{ uri: require(`../../../public/image/${item.icon}.png`) }}
               selected={item.path === pathname}
               selectedIcon={{

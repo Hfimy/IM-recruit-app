@@ -27,10 +27,24 @@ io.on('connection', socket => {
   socket.on('sendMsg', data => {
     const { from, to, content } = data;
     const chatId = [from, to].sort().join('_');
-    Chat.create({ from, to, content, chatId }, (err, doc) => {
-      const { __v, ...data } = { ...doc._doc };
-      io.emit('recMsg', data);
-    });
+    Chat.create(
+      { from, to, content, chatId, create_time: new Date().getTime() },
+      (err, doc) => {
+        const { __v, ...data } = { ...doc._doc };
+        io.emit('recMsg', data);
+      }
+    );
+  });
+  socket.on('readMsg', data => {
+    const { from, to } = data;
+    Chat.update(
+      { from, to },
+      { $set: { read: true } },
+      { multi: true },
+      (err, doc) => {
+        io.emit('updateMsg', { from, to });
+      }
+    );
   });
 });
 /**

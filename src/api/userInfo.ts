@@ -39,3 +39,19 @@ export function getUserInfo(cb: (data: ResponseData) => void) {
       cb({ code: 1, msg: '获取用户信息失败' });
     });
 }
+
+export function getUserInfoById(id: string, cb: (data: ResponseData) => void) {
+  const url = `/user/info/${id}`;
+  axios
+    .get(url)
+    .then(res => {
+      if (res.status === 200) {
+        cb(res.data);
+        return;
+      }
+      throw new Error();
+    })
+    .catch(err => {
+      cb({ code: 1, msg: '获取用户信息失败' });
+    });
+}

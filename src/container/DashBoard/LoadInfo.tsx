@@ -16,12 +16,14 @@ interface Props {
   ) => void;
   onGetMsgList?: (fail: (msg: string, duration?: number) => void) => void;
   onRecMsg?: () => void;
+  onUpdateMsg?: () => void;
 }
 @(withRouter as any)
 @(connect(null, {
   onLoadUserInfo: userAction.loadUserInfo,
   onGetMsgList: chatAction.onGetMsgList,
-  onRecMsg: chatAction.onRecMsg
+  onRecMsg: chatAction.onRecMsg,
+  onUpdateMsg: chatAction.onUpdateMsg
 }) as any)
 export default class LoadInfo extends React.Component<Props> {
   // 注意：只执行一次
@@ -29,6 +31,7 @@ export default class LoadInfo extends React.Component<Props> {
     this.props.onLoadUserInfo(Toast.fail, this.props.history.push);
     this.props.onGetMsgList(Toast.fail);
     this.props.onRecMsg();
+    this.props.onUpdateMsg();
   }
   render() {
     return null;

@@ -13,12 +13,15 @@ const emojiList = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 �
   .filter(item => item) // 去掉可能的空格项
   .map(item => ({ text: item }));
 
-interface Msg {
+interface SendMsg {
   from: string;
   to: string;
   content: string;
 }
-
+interface ReadMsg {
+  from: string;
+  to: string;
+}
 interface Props {
   match: {
     params: {
@@ -33,7 +36,8 @@ interface Props {
   };
   user: UserState;
   chat: ChatState;
-  onSendMsg: ({ from, to, content }: Msg) => void;
+  onSendMsg: ({ from, to, content }: SendMsg) => void;
+  onReadMsg: ({ from, to }: ReadMsg) => void;
 }
 interface State {
   text: string;
@@ -46,7 +50,8 @@ interface State {
     chat: state.chat
   }),
   {
-    onSendMsg: action.onSendMsg
+    onSendMsg: action.onSendMsg,
+    onReadMsg: action.onReadMsg
   }
 ) as any)
 export default class Chat extends React.Component<Props, State> {
@@ -81,6 +86,20 @@ export default class Chat extends React.Component<Props, State> {
   onShowEmoji = () => {
     this.setState({ showEmoji: !this.state.showEmoji });
   };
+  componentWillUnmount() {
+    // 此处加一层过滤 减少不必要的通信
+    const from = this.props.match.params.id;
+    const to = this.props.user._id;
+    const recMsgList = this.props.chat.msgList.filter(
+      item => item.from === from && item.to === to
+    );
+    if (recMsgList.some(item => item.read === false)) {
+      this.props.onReadMsg({
+        from,
+        to
+      });
+    }
+  }
   render() {
     return (
       <div className={`chat-page ${this.state.showEmoji ? 'emoji-show' : ''}`}>

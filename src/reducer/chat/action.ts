@@ -1,4 +1,8 @@
-import { GET_MSGLIST_SUCCESS, REC_MSG_SUCCESS } from './actionType';
+import {
+  GET_MSGLIST_SUCCESS,
+  REC_MSG_SUCCESS,
+  UPDATE_MSG_SUCCESS
+} from './actionType';
 import { ResponseData, getMsgList } from 'src/api';
 
 import io from 'socket.io-client';
@@ -7,42 +11,42 @@ const socket = io('http://localhost:3002');
 interface GetMsgListSuccess {
   type: GET_MSGLIST_SUCCESS;
   list: Array<object>;
-  unread: number;
 }
 
 interface RecMsgSuccess {
   type: REC_MSG_SUCCESS;
   data: object;
-  unreadAdd: number;
 }
 
-export const getMsgListSuccess = (
-  list: Array<object>,
-  unread: number
-): GetMsgListSuccess => ({
+interface UpdateMsgSuccess {
+  type: UPDATE_MSG_SUCCESS;
+  from: string;
+  to: string;
+}
+
+export const getMsgListSuccess = (list: Array<object>): GetMsgListSuccess => ({
   type: GET_MSGLIST_SUCCESS,
-  list,
-  unread
+  list
 });
 
-export const recMsgSuccess = (
-  data: object,
-  unreadAdd: number
-): RecMsgSuccess => ({
+export const recMsgSuccess = (data: object): RecMsgSuccess => ({
   type: REC_MSG_SUCCESS,
-  data,
-  unreadAdd
+  data
+});
+
+export const updateMsgSuccess = (from: string, to: string) => ({
+  type: UPDATE_MSG_SUCCESS,
+  from,
+  to
 });
 
 export const onGetMsgList = (
   fail: (msg: string, duration?: number) => void
 ) => {
-  return (dispatch, getState) => {
+  return dispatch => {
     getMsgList(({ code, data, msg }: ResponseData) => {
       if (code === 0) {
-        const to = getState() && getState().user && getState().user._id;
-        const unread = data.filter(item => item.to === to && !item.read).length;
-        dispatch(getMsgListSuccess(data, unread));
+        dispatch(getMsgListSuccess(data));
         return;
       }
       fail(msg, 1);
@@ -56,16 +60,26 @@ export const onSendMsg = ({ from, to, content }) => {
   };
 };
 
+export const onReadMsg = ({ from, to }) => {
+  return dispatch => {
+    socket.emit('readMsg', { from, to });
+  };
+};
+
+export const onUpdateMsg = () => {
+  return dispatch => {
+    socket.on('updateMsg', ({ from, to }) => {
+      dispatch(updateMsgSuccess(from, to));
+    });
+  };
+};
+
 export const onRecMsg = () => {
   return (dispatch, getState) => {
     socket.on('recMsg', data => {
       const _id = getState() && getState().user && getState().user._id;
       if (data.from === _id || data.to === _id) {
-        let unreadAdd = 0;
-        if (data.to === _id) {
-          unreadAdd = 1;
-        }
-        dispatch(recMsgSuccess(data, unreadAdd));
+        dispatch(recMsgSuccess(data));
       }
     });
   };

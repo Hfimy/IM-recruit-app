@@ -42,3 +42,7 @@ export const getStringLength = (str: string) => {
 export const getChatId = (from: string, to: string) => {
   return [from, to].sort().join('_');
 };
+
+export const getLastItem = (list: Array<any>) => {
+  return list[list.length - 1];
+};

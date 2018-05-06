@@ -60,11 +60,26 @@ router.post('/info', (req, res) => {
 
 router.get('/info', (req, res) => {
   const { uid } = req.cookies;
-  console.log('here', uid);
   if (!uid) {
     return res.json({ code: 1, msg: '身份过期，请重新登录' });
   }
   User.findById(uid, _filter, (err, data) => {
+    if (err) {
+      return res.json({ code: 1, msg: '服务器错误' });
+    }
+    if (!data) {
+      return res.json({ code: 1, msg: '用户不存在' });
+    }
+    res.json({ code: 0, data });
+  });
+});
+
+router.get('/info/:id', (req, res) => {
+  const { uid } = req.cookies;
+  if (!uid) {
+    return res.json({ code: 1, msg: '身份过期，请重新登录' });
+  }
+  User.findById(req.params.id, _filter, (err, data) => {
     if (err) {
       return res.json({ code: 1, msg: '服务器错误' });
     }

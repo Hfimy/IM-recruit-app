@@ -3,9 +3,9 @@ import queryString from 'query-string';
 
 import { login } from './login';
 import { register } from './register';
-import { updateUserInfo, getUserInfo } from './userInfo';
+import { updateUserInfo, getUserInfo, getUserInfoById } from './userInfo';
 import { getUserList } from './userList';
-import { getMsgList } from './chat'
+import { getMsgList } from './chat';
 
 // 与后端的一种接口约定
 export interface ResponseData {
@@ -21,6 +21,7 @@ export {
   register,
   updateUserInfo,
   getUserInfo,
+  getUserInfoById,
   getUserList,
   getMsgList
 };
