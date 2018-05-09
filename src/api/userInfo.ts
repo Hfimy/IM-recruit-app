@@ -9,7 +9,7 @@ interface Params {
 }
 
 export function updateUserInfo(body: Params, cb: (data: ResponseData) => void) {
-  const url = '/user/info';
+  const url = '/api/user/info';
   axios
     .post(url, body)
     .then(res => {
@@ -25,7 +25,7 @@ export function updateUserInfo(body: Params, cb: (data: ResponseData) => void) {
 }
 
 export function getUserInfo(cb: (data: ResponseData) => void) {
-  const url = '/user/info';
+  const url = '/api/user/info';
   axios
     .get(url)
     .then(res => {
@@ -41,7 +41,7 @@ export function getUserInfo(cb: (data: ResponseData) => void) {
 }
 
 export function getUserInfoById(id: string, cb: (data: ResponseData) => void) {
-  const url = `/user/info/${id}`;
+  const url = `/api/user/info/${id}`;
   axios
     .get(url)
     .then(res => {

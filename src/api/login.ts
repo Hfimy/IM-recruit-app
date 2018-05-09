@@ -6,7 +6,7 @@ interface LoginParams {
 }
 
 export function login(body: LoginParams, cb: (data: ResponseData) => void) {
-  const url = '/user/login';
+  const url = '/api/user/login';
   axios
     .post(url, body)
     .then(res => {

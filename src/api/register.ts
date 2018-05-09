@@ -15,7 +15,7 @@ export function register(
   body: RegisterParams,
   cb: (data: ResponseData) => void
 ) {
-  const url = '/user/register';
+  const url = '/api/user/register';
   axios
     .post(url, body)
     .then(res => {

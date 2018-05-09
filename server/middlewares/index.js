@@ -10,5 +10,10 @@ module.exports = app => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(bodyParser.json());
-  app.use(express.static(path.join(__dirname, 'public')));
+
+  // 添加静态资源前缀，与前端打包的publicPath对应
+  app.use(
+    '/public',
+    express.static(path.resolve(__dirname, '../public/build'))
+  );
 };

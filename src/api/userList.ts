@@ -9,7 +9,7 @@ interface Params {
 }
 
 export function getUserList(params: Params, cb: (data: ResponseData) => void) {
-  const url = '/user/list?' + queryString.stringify(params);
+  const url = '/api/user/list?' + queryString.stringify(params);
   axios
     .get(url)
     .then(res => {
