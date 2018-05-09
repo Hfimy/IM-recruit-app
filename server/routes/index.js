@@ -9,7 +9,7 @@ module.exports = app => {
 
   // 添加路由通配符处理
   app.use('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../public/build/index.html'));
+    res.sendFile(path.resolve(__dirname, '../../build/index.html'));
   });
   // errorHandler(app);
 };

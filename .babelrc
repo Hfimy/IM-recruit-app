@@ -1,6 +1,8 @@
 {
+  "presets": ["react-app"],
   "plugins": [
     "react-hot-loader/babel",
-    ["import", { "libraryName": "antd-mobile", "style": "css" }]
+    ["import", { "libraryName": "antd-mobile", "style": "css" }],
+    "transform-object-rest-spread"
   ]
 }
