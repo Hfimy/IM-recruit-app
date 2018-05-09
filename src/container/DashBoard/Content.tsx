@@ -9,6 +9,7 @@ import ChatList from 'container/ChatList';
 import UserCenter from 'container/UserCenter';
 
 import { RootState } from 'src/reducer';
+// import QueueAnim from 'rc-queue-anim';
 
 // import styled from 'styled-components';
 // const Div = styled.div`
@@ -76,12 +77,25 @@ export default class Content extends React.Component<Props> {
       item => item.to === this.props.userId && !item.read
     ).length;
 
+    const pageInfo = showNavList.find(
+      item => item.path === this.props.location.pathname
+    );
+    // const page = pageInfo ? (
+    //   <Route
+    //     key={pageInfo.path}
+    //     path={pageInfo.path}
+    //     exact={true}
+    //     component={pageInfo.component}
+    //   />
+    // ) : (
+    //   <Redirect to="/404" />
+    // );
     return (
       <div>
         <NavBar mode="dark">{current && current.title}</NavBar>
         <div>
+          {/* 这里使用数组的下标作为key值是错误的 */}
           <Switch>
-            {/* 这里使用数组的下标作为key值是错误的 */}
             {showNavList.map(item => (
               <Route
                 key={item.path}
@@ -92,6 +106,10 @@ export default class Content extends React.Component<Props> {
             ))}
             <Redirect to="/404" />
           </Switch>
+          {/* 使用动画替代，数据渲染有bug */}
+          {/* <QueueAnim delay={300} duration={600} type="bottom">
+            {page}
+          </QueueAnim> */}
         </div>
         <TabBar>
           {showNavList.map((item, key) => (

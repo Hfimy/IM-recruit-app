@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { NavBar, Icon, Toast, List, TextareaItem, Grid } from 'antd-mobile';
+// import QueneAnim from 'rc-queue-anim';
 
 import { RootState } from 'src/reducer';
 import { UserState } from 'reducer/user';
@@ -122,6 +123,8 @@ export default class Chat extends React.Component<Props, State> {
           {this.props.location.state.user}
         </NavBar>
         <div className="chat-list" id="chat-list">
+          {/* 此处使用动画有bug */}
+          {/* <QueneAnim delay={300} duration={600} type="bottom"> */}
           {this.props.chat.msgList
             .filter(
               item =>
@@ -156,6 +159,7 @@ export default class Chat extends React.Component<Props, State> {
                 </List>
               );
             })}
+          {/* </QueneAnim> */}
         </div>
         <div className="bottom-input">
           <input
