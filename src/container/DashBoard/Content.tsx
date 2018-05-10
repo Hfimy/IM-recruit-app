@@ -117,10 +117,10 @@ export default class Content extends React.Component<Props> {
               key={item.path}
               title={item.text}
               badge={item.path === '/chat' ? unread : 0}
-              icon={{ uri: require(`../../../public/image/${item.icon}.png`) }}
+              icon={{ uri: require(`../../image/${item.icon}.png`) }}
               selected={item.path === pathname}
               selectedIcon={{
-                uri: require(`../../../public/image/${item.icon}-active.png`)
+                uri: require(`../../image/${item.icon}-active.png`)
               }}
               onPress={() => this.props.history.push(item.path)}
             />
