@@ -28,6 +28,7 @@
       // "image/*": ["public/image/*"]
     }
   },
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "build",
