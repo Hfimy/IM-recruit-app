@@ -3,6 +3,7 @@
   "plugins": [
     "react-hot-loader/babel",
     ["import", { "libraryName": "antd-mobile", "style": "css" }],
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-typescript"
   ]
 }

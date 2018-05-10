@@ -1,29 +1,25 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { hot } from 'react-hot-loader';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Login from 'container/Login';
-import Register from 'container/Register';
-import DashBoard from 'container/DashBoard';
+import { BrowserRouter } from 'react-router-dom';
 
-import store from './store';
+import { configureStore } from './store';
+const store = configureStore();
 
-const HotApp = () => (
+import AppCommon from './AppCommon';
+
+const AppContainer = () => (
   <BrowserRouter>
-    <Switch>
-      <Route path="/login" exact={true} component={Login} />
-      <Route path="/register" exact={true} component={Register} />
-      <Route component={DashBoard} />
-    </Switch>
+    <AppCommon />
   </BrowserRouter>
 );
 
-const HotContainer = hot(module)(HotApp);
+const HotApp = hot(module)(AppContainer);
 
 const App = () => (
   <Provider store={store}>
-    <HotContainer />
+    <HotApp />
   </Provider>
 );
 
