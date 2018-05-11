@@ -46,7 +46,7 @@ cnpm i // 使用yarn可能有些ts的包安装失败
   ```
 * 后端
 
-  首先需要安装 mongodb，shell 操作可参考![mongodb入门及基本shell操作](https://www.jianshu.com/p/c6ba397fefde)
+  首先需要安装 mongodb，shell 操作可参考[mongodb 入门及基本 shell 操作](https://www.jianshu.com/p/c6ba397fefde)
 
   ```
   npm run server
@@ -60,7 +60,7 @@ npm run server  // 现在可以直接通过服务器访问，无需再运行开�
 npm run server:ssr // ssr版，目前运行出错，代码仅供参考
 ```
 
-#### 生产模式实现服务端渲染的大致思路
+#### 生产模式实现服务端渲染的大致思路 ( 开发模式 ssr 未实现 )
 
 * 安装`babel-cli`，通过 babel-node 使 node 环境支持 import、jsx 等前端语法。使用 babel-node 替代 node 执行，注：babel-preset-react-app 需要指定 NODE_ENV
 
@@ -181,7 +181,7 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Login);
 <Provider> does not support changing `store` on the fly.It is most likely that you see this error because you updated to Redux 2.x and React Redux 2.x which no longer hot reload reducers automatically.
 ```
 
-根据 react-redux 的[github issue](https://github.com/reactjs/react-redux/issues/356)，猜测可能是因为热更新导致多次执行了 createStore，因此将热更新代码置于`Provider`组件下，可解决此问题
+根据 react-redux 的[github issues](https://github.com/reactjs/react-redux/issues/356)，猜测可能是因为热更新导致多次执行了 createStore，因此将热更新代码置于`Provider`组件下，可解决此问题
 
 14、思考何时引入 redux，什么场景下需要用到 redux，如何非破坏式的从现有目录结构和代码集成 redux? 尝试先只使用 react 实现，在遇到痛点时使用 redux 重构，而不是一开始就上 redux
 
@@ -200,7 +200,7 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Login);
 (3,38): Cannot find module 'react-native'.
 ```
 
-查看[github issue](https://github.com/ant-design/ant-design-mobile/issues/636)，目前此版本依然没有好的解决办法，手动查找该文件删除 react-native 的引用或者安装 react-native
+查看[github issues](https://github.com/ant-design/ant-design-mobile/issues/636)，目前此版本依然没有好的解决办法，手动查找该文件删除 react-native 的引用或者安装 react-native
 
 * babel-plugin-import 按需加载样式无效，目前在 git issues 没有找到准确的原因，暂通过在主文件引入所有样式开发
 
