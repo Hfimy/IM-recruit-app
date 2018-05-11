@@ -1,4 +1,4 @@
-### 一款类 Boss 直聘的移动端 SPA 单页应用 （仅供学习参考使用）
+### 一款简易版类 Boss 直聘 的移动端 SPA 单页应用 （仅供学习参考使用）
 
 #### 技术栈 ：
 
@@ -23,8 +23,12 @@
 
   ![chat.gif](https://github.com/Hfimy/IM-recruit-app/blob/master/public/chat.gif)
 
-<br/>
-<br/>
+  <br/>
+  <br/>
+
+* 个人头像选择及信息编辑模块功能未实善
+  <br/>
+  <br/>
 
 #### 下载运行
 
