@@ -6,7 +6,7 @@
   * redux-thunk
   * axios
   * rmc-pull-to-refresh , 滑动加载组件
-  * styled-components , 少量尝试使用 css in js
+  * styled-components , 少量尝试使用 css in js，主要还是使用 less
   * rc-queue-anim , Ant Motion 提供的进出场动画，因影响原有组件，已注释
   * ...
 * 后端：Express + Mongodb + Socket.io
@@ -27,6 +27,8 @@
 <br/>
 
 #### 下载运行
+
+_请在 chrome 浏览器运行查看 , firefox 以及 ie 会出现部分样式崩塌_
 
 下载：
 
