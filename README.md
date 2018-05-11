@@ -15,13 +15,13 @@
 
 * 登录注册页
 
-  ![auth.gif](https://github.com/Hfimy/IM-recruit-app/public/auth.gif)
+  ![auth.gif](https://github.com/Hfimy/IM-recruit-app/blob/master/public/auth.gif)
 
 * 主页 + 聊天页
 
-  ![dashboard.gif](https://github.com/Hfimy/IM-recruit-app/public/dashboard.gif)
+  ![dashboard.gif](https://github.com/Hfimy/IM-recruit-app/blob/master/public/dashboard.gif)
 
-  ![chat.gif](https://github.com/Hfimy/IM-recruit-app/public/chat.gif)
+  ![chat.gif](https://github.com/Hfimy/IM-recruit-app/blob/master/public/chat.gif)
 
 <br/>
 <br/>
